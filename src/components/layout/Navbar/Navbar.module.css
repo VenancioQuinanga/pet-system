@@ -1,0 +1,142 @@
+nav#navbar{
+    box-shadow: 1px 1px 13px -8px rgba(24, 24, 24, 1);
+    -webkit-box-shadow: 1px 1px 13px -8px rgba(24, 24, 24, 1);
+    -moz-box-shadow: 1px 1px 13px -8px rgba(24, 24, 24, 1);
+    top:0;
+    position: fixed;
+    width: 100%;
+    height: 9.8%;
+    background: #fff;
+    z-index: 1;
+}
+
+nav#navbar ul{
+    float: right;
+    list-style: none;
+    display: block;
+}
+
+nav#navbar ul li{
+    float: left;
+    margin-left: 1em;
+    cursor: pointer;
+    margin-top: .4em;
+}
+
+nav#navbar ul li a{
+    font-weight: bold;
+    transition: 1s;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: none;
+}
+
+#menuButton{
+    font-weight: bold;
+    transition: 1s;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: none;
+    margin-top: 1em;
+}
+
+nav#navbar ul li a,nav#dropdown ul li a span{
+    text-decoration: none;
+    transition: .5s;
+}
+
+nav#navbar ul li a span.load-item{
+    display: none;
+}
+
+#dropdown{
+    margin: 0;
+    top: 0;
+    position: fixed;
+    z-index: 1050;
+    width: 255px;
+    height: 100%;
+    display: block;
+    background: #fff;
+    border-right: 1px solid #0000002d;
+    padding: 70px 0px 20px 0px;
+    transition: .1s;
+}
+
+.logo{
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+    margin-top: -6.6em;
+    margin-left: 1em;
+    cursor: pointer;
+    border-radius: 100%;
+    padding: 1px;
+}
+
+.logo_title{
+    font-weight: bold;
+    font-size: 1.8em;
+    margin-top: -80px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    cursor: pointer;
+}
+
+#dropdown ul{
+    width: 100%;
+    height: 100%;
+    list-style: none;
+}
+
+@media (max-width:900px){
+    nav#dropdown{
+        display: none;
+    }
+}
+
+nav#dropdown ul li{
+    width: 15.3em;
+    margin-left: -1.7em;
+    border-radius: .4em;
+    padding: .7em;
+}
+
+/*Configuration of hover of his lis */
+nav#dropdown ul li:hover{
+    background-color: #cccccc8f;
+} 
+
+/*Configuration of his a that contain the text*/
+nav#dropdown ul li a{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 19px;
+    padding:5px 8% 30px 8%;
+    height: 50px;
+    line-height: 20px;
+    margin-left: -1em;
+}
+
+nav#dropdown ul li a i{
+    margin-right: 1.1em;
+    font-size: 1.3em;
+}
+
+/*His configuration of hover*/
+nav#dropdown .myHidden:hover{
+    background-color: #cccccc8f;
+    color: #000;
+}
+
+.active{
+    background-color: #cccccc8f;
+}
+
+
+@media print {
+    #navbar {
+      display: none;
+    }
+}

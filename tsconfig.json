@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "Tests/useAuthText.tsx", "Tests/useFlashMessageTest.tsx", "utils/PrivateRoute.tsx"],
   "exclude": ["node_modules"]
 }

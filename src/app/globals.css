@@ -1,0 +1,111 @@
+:root{
+  --color-item-nav:blue;
+  --color-confortable:rgb(0, 119, 255);
+  --color-item-nav-hover:rgba(0, 0, 255, 0.836);
+  --font-weight-bold:bold;
+}
+
+body{
+  background-color: #cccccc8a !important;
+}
+
+.border-full{
+  border-radius: 100%;
+}
+
+.border-sm{
+  border-radius: 4px;
+}
+
+.text-ccc{
+  color: #cccccc8a;
+}
+
+.bg-ccc{
+  background-color: #cccccc55 !important;
+}
+
+.btn-ccc{
+  transition: .5s;
+  background-color: #cccccc7a !important;
+}
+
+.btn-ccc:hover{
+  background-color: #cccccccd !important;
+}
+
+
+.shadow{
+  box-shadow: 1px 1px 5px -4px rgba(24, 24, 24, 1);
+  -webkit-box-shadow: 1px 1px 5px -4px rgba(24, 24, 24, 1);
+  -moz-box-shadow: 1px 1px 5px -4px rgba(24, 24, 24, 1);
+}
+
+.font-weight-bold{
+  font-weight: bold !important;
+}
+
+.center{
+  text-align: center;
+}
+
+.main{
+  padding: 40px;
+  margin-left: 255px;
+}
+
+.profile{
+  background-color: #fff;
+  box-shadow: 1px 1px 5px -4px rgba(24, 24, 24, 1);
+  -webkit-box-shadow: -1px 1px 5px -5px rgba(24, 24, 24, 1);
+  -moz-box-shadow: -1px 1px 5px -5px rgba(24, 24, 24, 1);
+}
+
+.c-blue{
+  color: blue;
+}
+
+.custom_table{
+  background-color: #fff;
+  height: 400px;
+  width: 100%;
+}
+
+.MuiDataGrid-columnHeader {
+  background-color: #0d6efd !important;
+}
+
+.custom_table .MuiDataGrid-columnHeaderTitle {
+  color: #fff;
+  font-weight: bold;
+}
+
+.custom_table .MuiDataGrid-cell {
+  font-family: 'Franklin Gothic', Arial !important;
+  color: black;
+  font-size: 1em
+}
+
+.custom_table .MuiDataGrid-columnHeader  .MuiDataGrid-checkboxInput,
+.custom_table .MuiDataGrid-columnHeader .MuiButtonBase-root,
+.custom_table .MuiDataGrid-columnHeader .MuiDataGrid-sortIcon {
+  color: #fff !important
+}
+
+.danger{
+  background-color: #cccccc55 !important;
+}
+
+@media (max-width: 900px){
+  .main{
+    padding: 0px !important;
+    margin-top: 10em;
+    margin: 20px !important;
+  }
+}
+
+@media print {
+  .print_button, .cancel_button, .invoice-form {
+    display: none !important;
+  }
+}

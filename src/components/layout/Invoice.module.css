@@ -1,0 +1,80 @@
+.invoice_container {
+  padding: 20px;
+  width: 85%;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.invoice {
+  border: 1px solid #ddd;
+  padding: 40px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.invoice_title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.invoice_table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.invoice_table th, .invoice_table td {
+  padding: 8px;
+  text-align: left;
+}
+
+.invoice_table th {
+  border-bottom: 1px solid #ddd;
+}
+
+.tot_payment {
+  text-align: left;
+  margin-top: 20px;
+  
+}
+
+.tot_payment strong {
+  font-size: 1.3em;
+}
+
+.print_button, .cancel_button {
+  border: 1px solid #0d6efd; 
+  border-radius: 5px;
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-weight: bold;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.cancel_button {
+  border: 1px solid #000 !important; 
+  background-color: #000 !important;
+}
+
+.print_button:hover {
+  background-color: #0d6dfddd;
+}
+
+@media print {
+  .print_button, .cancel_button, .invoice-form {
+    display: none !important;
+  }
+ 
+  .invoice {
+    border: none;
+    background-color: none;
+    padding: 10px;
+    box-shadow: none;
+  }
+}

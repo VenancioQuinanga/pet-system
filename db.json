@@ -1,0 +1,342 @@
+{
+  "produtos": [
+    {
+      "id": 1,
+      "name": "Charlie xuxu",
+      "description": "Rock Failer",
+      "price": "90000",
+      "created_at": "29/02/12",
+      "family": {
+        "family": "Familia X2",
+        "description": "Uma família de classe X2"
+      },
+      "type": {
+        "type": "tipo X2",
+        "description": "Uma tipo X2"
+      },
+      "provisioner": {
+        "name": "João Almeida",
+        "email": "João91@gmail.com",
+        "phone_number": 925677653
+      }
+    },
+    {
+      "id": 2,
+      "name": "Carl Roves",
+      "description": "Pastor alemão",
+      "price": "80000",
+      "created_at": "09/02/12",
+      "family": {
+        "family": "Familia X1",
+        "description": "Uma família de classe X1"
+      },
+      "type": {
+        "type": "tipo X3",
+        "description": "Uma tipo X3"
+      },
+      "provisioner": {
+        "name": "Ricardo Gomes",
+        "email": "ricardoG91@gmail.com",
+        "phone_number": 925677653
+      }
+    },
+    {
+      "id": 3,
+      "name": "Ruben Fill",
+      "description": "Bubu",
+      "price": "75000",
+      "created_at": "29/08/12",
+      "family": {
+        "family": "Familia X2",
+        "description": "Uma família de classe X2"
+      },
+      "type": {
+        "type": "tipo X4",
+        "description": "Uma tipo X4"
+      },
+      "provisioner": {
+        "name": "Felipe Manuel",
+        "email": "felipeM91@gmail.com",
+        "phone_number": 925677653
+      }
+    },
+    {
+      "id": 4,
+      "name": "Bob Marc",
+      "description": "Caniche",
+      "price": "57000",
+      "created_at": "19/02/12",
+      "family": {
+        "family": "Familia X2",
+        "description": "Uma família de classe X2"
+      },
+      "type": {
+        "type": "tipo X1",
+        "description": "Uma tipo X1"
+      },
+      "provisioner": {
+        "name": "João Almeida",
+        "email": "João91@gmail.com",
+        "phone_number": 925677653
+      }
+    }
+  ],
+  "usuario": [
+    {
+      "id": 1,
+      "name": "João Almeida",
+      "email": "João91@gmail.com",
+      "password": "123456",
+      "phone_number": 925677653,
+      "created_at": "29/02/12",
+      "gender": {
+        "gender": "Masculino"
+      },
+      "category": {
+        "category": "ADM"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Ricardo Gomes",
+      "email": "ricardoG91@gmail.com",
+      "password": "123456",
+      "phone_number": 925677653,
+      "created_at": "29/02/12",
+      "gender": {
+        "gender": "Masculino"
+      },
+      "category": {
+        "category": "Funcionário"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Felipe Manuel",
+      "email": "felipem91@gmail.com@gmail.com",
+      "password": "123456",
+      "phone_number": 925677653,
+      "created_at": "29/02/12",
+      "gender": {
+        "gender": "Masculino"
+      },
+      "category": {
+        "category": "Funcionário"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Frida Almeida",
+      "email": "fridaA1@gmail.com",
+      "password": "123456",
+      "phone_number": 925677653,
+      "created_at": "29/02/12",
+      "gender": {
+        "gender": "Femenino"
+      },
+      "category": {
+        "category": "Funcionário"
+      }
+    },
+    {
+      "name": "João Mannuel ",
+      "email": "joãoM@gmail.com",
+      "fk_category": "2",
+      "fk_gender": "1",
+      "phone_number": "923456543",
+      "password": "123456",
+      "id": 5
+    }
+  ],
+  "fornecedor": [
+    {
+      "id": 1,
+      "name": "João Almeida",
+      "email": "João91@gmail.com",
+      "phone_number": 925677653,
+      "created_at": "29/02/12"
+    },
+    {
+      "id": 2,
+      "name": "Ricardo Gomes",
+      "email": "ricardoG91@gmail.com",
+      "phone_number": 925677653,
+      "created_at": "29/02/12"
+    },
+    {
+      "id": 3,
+      "name": "Felipe Manuel",
+      "email": "felipem91@gmail.com@gmail.com",
+      "phone_number": 925677653,
+      "created_at": "29/02/12"
+    },
+    {
+      "id": 4,
+      "name": "Frida Almeida",
+      "email": "fridaA1@gmail.com",
+      "password": "123456",
+      "phone_number": 925677653,
+      "created_at": "29/02/12"
+    }
+  ],
+  "genero_usuario": [
+    {
+      "id": 1,
+      "gender": "Masculino"
+    },
+    {
+      "id": 2,
+      "gender": "Femenino"
+    }
+  ],
+  "categoria_usuario": [
+    {
+      "id": 1,
+      "category": "ADM"
+    },
+    {
+      "id": 2,
+      "category": "Funcionário"
+    }
+  ],
+  "tipo": [
+    {
+      "id": 1,
+      "type": "Tipo X1",
+      "description": "Uma tipo X1"
+    },
+    {
+      "id": 2,
+      "type": "Tipo X2",
+      "description": "Uma tipo X2"
+    },
+    {
+      "id": 3,
+      "type": "Tipo X3",
+      "description": "Uma tipo X3"
+    },
+    {
+      "id": 4,
+      "type": "Tipo X4",
+      "description": "Uma tipo X4"
+    }
+  ],
+  "tipo_pagamento": [
+    {
+      "id": 1,
+      "type": "Cartão de crédito"
+    },
+    {
+      "id": 2,
+      "type": "Dinheiro à mão"
+    },
+    {
+      "id": 3,
+      "type": "Transferência bancária"
+    },
+    {
+      "id": 4,
+      "type": "Deposito bancário"
+    }
+  ],
+  "familia": [
+    {
+      "id": 1,
+      "family": "Família X1",
+      "description": "Uma família de classe X1"
+    },
+    {
+      "id": 2,
+      "family": "Família X2",
+      "description": "Uma família de classe X2"
+    },
+    {
+      "id": 3,
+      "family": "Família X3",
+      "description": "Uma família de classe X3"
+    },
+    {
+      "id": 4,
+      "family": "Família X4",
+      "description": "Uma família de classe X4"
+    }
+  ],
+  "estoque": [
+    {
+      "id": 1,
+      "quantity": 5,
+      "unity": 3,
+      "date": "08/05/02"
+    },
+    {
+      "id": 2,
+      "quantity": 3,
+      "unity": 5,
+      "date": "05/02/02"
+    },
+    {
+      "id": 3,
+      "quantity": 2,
+      "unity": 5,
+      "date": "05/02/02"
+    },
+    {
+      "id": 4,
+      "quantity": 3,
+      "unity": 5,
+      "date": "05/06/02"
+    }
+  ],
+  "venda": [
+    {
+      "id": 1,
+      "payment_type": "Cartão de crédito",
+      "payment": 58000,
+      "troco": 0,
+      "user": "Júlio Gustavo",
+      "date": "08/05/02"
+    },
+    {
+      "id": 2,
+      "payment_type": "Transferência bancária",
+      "payment": 78000,
+      "troco": 0,
+      "user": "Júlio Gustavo",
+      "date": "18/05/02"
+    },
+    {
+      "id": 3,
+      "payment_type": "Deposito bancário",
+      "payment": 95000,
+      "troco": 0,
+      "user": "Alvaro Samuel",
+      "date": "18/05/02"
+    },
+    {
+      "id": 4,
+      "payment_type": "Dinheiro á mão",
+      "payment": 175000,
+      "troco": 3500,
+      "user": "Frenado Gusman",
+      "date": "08/07/02"
+    }
+  ],
+  "venda_produto": [
+    {
+      "id": 1,
+      "product": "Carl Roves"
+    },
+    {
+      "id": 2,
+      "product": "Carl Roves"
+    },
+    {
+      "id": 3,
+      "product": "Bob Marc"
+    },
+    {
+      "id": 4,
+      "product": "Ruben Fill"
+    }
+  ]
+}
