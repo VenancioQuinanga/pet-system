@@ -18,7 +18,8 @@ export default function useProvisionerActions() {
 
   async function addProvisioner(
     provisioner: ProvisionerInterface, 
-    token: any
+    token: any,
+    setIsProgressing: Function
   ): Promise<void> {
     try{
       api.post(`/fornecedor`, provisioner, {
@@ -27,6 +28,7 @@ export default function useProvisionerActions() {
           }
         })
         .then((response) => {
+          setIsProgressing(false)
           setFlashMessage({ 
             message: 'Fornecedor cadastrado com sucesso!', 
             type: 'success'
@@ -34,6 +36,7 @@ export default function useProvisionerActions() {
         })
 
     } catch (error: any) {
+      setIsProgressing(false)
       verifyAuthAndRequestError(error.response?.status, error.response?.data?.msg)
     }
   }
@@ -80,9 +83,10 @@ export default function useProvisionerActions() {
   }
 
   async function editProvisioner(
-    provisioner: ProvisionerInterface, 
+    provisioner: ProvisionerInterface,
     id: number, 
-    token: any
+    token: any,
+    setIsProgressing: Function
   ): Promise<void> {
     try{
       api.patch(`/fornecedor/${id}`, provisioner, {
@@ -91,6 +95,7 @@ export default function useProvisionerActions() {
         }
       })
       .then((res)=>{
+        setIsProgressing(false)
         setFlashMessage({ 
          message: 'Fornecedor atualizado com sucesso!',
          type: 'success'
@@ -98,6 +103,7 @@ export default function useProvisionerActions() {
       })
 
     }catch(error: any){
+      setIsProgressing(false)
       verifyAuthAndRequestError(error.response?.status, error.response?.data?.msg)
     } 
   }

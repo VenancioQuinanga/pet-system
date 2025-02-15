@@ -4,20 +4,13 @@ import { useEffect, useState } from 'react';
 
 // Components
 import {DataGrid} from '@mui/x-data-grid';
-import Loader from '../Loader';
+import Loader from '../loader/Loader';
 
 type Sales_productsProps = {
-  id:number,
-  getSale: Function,
+  salesProducts: any,
 }
 
-export default function SalesProductsTable({ id, getSale}: Sales_productsProps) {
-  const [salesProducts,setSalesProducts] = useState([])
-
-  useEffect(()=>{
-    const token = localStorage.getItem('token')
-    getSale(setSalesProducts, id, token)
-  },[])
+export default function SalesProductsTable({ salesProducts }: Sales_productsProps) {
 
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
@@ -35,7 +28,7 @@ export default function SalesProductsTable({ id, getSale}: Sales_productsProps) 
       <div className="lead text-primary mt-2 mb-4 center">
         <span className="display-6 font-weight-bold">Detalhes da compra</span>
       </div>
-      {salesProducts.length > 0 ? (
+      {salesProducts?.length > 0 ? (
         <div className="custom_table">
           <DataGrid
             rows={salesProducts}

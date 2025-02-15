@@ -18,20 +18,23 @@ export default function useWarehouseActions() {
 
   async function addWarehouse(
     warehouse: WarehouseInterface, 
-    token: any
+    token: any,
+    setIsProgressing: Function
   ): Promise<void> {
     try{
       api
-        .post(`/armazem`, warehouse,{
+        .post(`/armazem`, warehouse, {
           headers: {
             'Authorization' : `Bearer ${token}`
           }
         })
         .then((response) => {
+          setIsProgressing(false)
           setFlashMessage({ message: 'Armazem cadastrado com sucesso!', type: 'success'})
         })
 
     } catch (error: any) {
+      setIsProgressing(false)
       verifyAuthAndRequestError(error.response?.status, error.response?.data?.msg)
     }
   }
@@ -80,7 +83,8 @@ export default function useWarehouseActions() {
   async function editWarehouse(
     warehouse: WarehouseInterface, 
     id: number, 
-    token: any
+    token: any,
+    setIsProgressing: Function
   ): Promise<void> {
     try{
       api.patch(`/armazem/${id}`, warehouse, {
@@ -89,10 +93,12 @@ export default function useWarehouseActions() {
         }
       })
       .then((res)=>{
+        setIsProgressing(false)
         setFlashMessage({ message: 'Armazem atualizado com sucesso!', type: 'success'})
       })
 
     }catch(error: any){
+      setIsProgressing(false)
       verifyAuthAndRequestError(error.response?.status, error.response?.data?.msg)
     } 
   }

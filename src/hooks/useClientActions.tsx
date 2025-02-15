@@ -33,7 +33,8 @@ export default function useClientActions() {
 
   async function addClient(
     client: ClientInterface | any, 
-    token: any
+    token: any,
+    setIsProgressing: Function
   ): Promise<void> {
     
     let clientData = {
@@ -55,6 +56,7 @@ export default function useClientActions() {
           }
         })
         .then((response) => {
+          setIsProgressing(false)
           setFlashMessage({ 
             message: 'Cadastro realizado com sucesso!', 
             type: 'success'
@@ -62,6 +64,7 @@ export default function useClientActions() {
         })
 
     } catch (error: any) {
+      setIsProgressing(false)
       verifyAuthAndRequestError(error.response?.status, error.response?.data?.msg)
     }
   }
@@ -106,7 +109,8 @@ export default function useClientActions() {
   async function editClient(
     client: ClientInterface, 
     id: number, 
-    token: any
+    token: any,
+    setIsProgressing: Function
   ): Promise<void> {
     try{
       api.patch(`/cliente/${id}`, client, {
@@ -115,10 +119,12 @@ export default function useClientActions() {
         }
       })
       .then((res)=>{
+        setIsProgressing(false)
         setFlashMessage({ message: 'Cliente atualizado com sucesso!', type: 'success'})
       })
       
     }catch(error: any){
+      setIsProgressing(false)
       verifyAuthAndRequestError(error.response?.status, error.response?.data?.msg
         || 'Erro ao efetuar edição!'
       )

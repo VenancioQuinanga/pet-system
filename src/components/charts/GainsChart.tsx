@@ -1,9 +1,6 @@
 import React from 'react';
 import { Chart } from 'react-google-charts';
 
-// Components
-import Loader from '../layout/Loader';
-
 type AreaChartType = {
   monthGains: Array<any>
 }
@@ -29,16 +26,14 @@ const GainsChart: React.FC<AreaChartType> = ({monthGains}) => {
 
   return (
     <>
-      {monthGains?.length > 1 ? (
+      {monthGains?.length > 1 && (
         <Chart
           chartType="AreaChart"
-          width="100%"
+          width="auto"
           height="400px"
           data={monthGains}
           options={options}
         />
-      ):(
-        <Loader/>
       )}
       {monthGains?.length === 1  &&(
         <div className="text-dark lead center mb-3">Sem lucros encontrados!</div>

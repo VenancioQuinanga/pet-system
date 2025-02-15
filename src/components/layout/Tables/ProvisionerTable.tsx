@@ -4,20 +4,14 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 //Components
-import {DataGrid} from '@mui/x-data-grid';
-import Loader from '../Loader';
+import { DataGrid } from '@mui/x-data-grid';
+import Loader from '../loader/Loader';
 
 type ProvisionerProps = {
-  getProvisioners: Function
+  provisioners: any
 }
 
-export default function ProvisionerTable({getProvisioners}: ProvisionerProps) {
-  const [provisioners,setProvisioners] = useState([])
-
-  useEffect(()=>{
-    const token = localStorage.getItem('token')
-    getProvisioners(setProvisioners,token)
-  },[])
+export default function ProvisionerTable({provisioners}: ProvisionerProps) {
 
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
@@ -38,7 +32,7 @@ export default function ProvisionerTable({getProvisioners}: ProvisionerProps) {
       <div className="lead text-primary mt-2 mb-4 center">
         <span className="display-6 font-weight-bold">Tabela de fornecedores</span>
       </div>
-      {provisioners.length > 0 ? (
+      {provisioners?.length > 0 ? (
         <div className="custom_table">
           <DataGrid
             rows={provisioners}

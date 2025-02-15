@@ -1,22 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react';
-
 //Components
 import {DataGrid} from '@mui/x-data-grid';
-import Loader from '../Loader';
+import Loader from '../loader/Loader';
 
 type MovimentsProps = {
-  getMoviments: Function
+  moviments: any
 }
 
-export default function MovimentsTable({getMoviments}: MovimentsProps) {
-  const [moviments,setMoviments] = useState([])
-
-  useEffect(()=>{
-    const token = localStorage.getItem('token')
-    getMoviments(setMoviments, token)
-  },[])
+export default function MovimentsTable({ moviments }: MovimentsProps) {
 
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
@@ -32,7 +24,7 @@ export default function MovimentsTable({getMoviments}: MovimentsProps) {
       <div className="lead text-primary mt-2 mb-4 center">
         <span className="display-6 font-weight-bold">Tabela de movimentos</span>
       </div>
-      {moviments.length > 0 ? (
+      {moviments?.length > 0 ? (
         <div className="custom_table">
           <DataGrid
             rows={moviments}

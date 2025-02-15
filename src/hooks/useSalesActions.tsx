@@ -297,7 +297,8 @@ export default function useSalesActions() {
     user: UserInterface, 
     sales: SaleInterface[],
     years: any[],
-    token: any
+    token: any,
+    setIsProgressing: Function
   ): Promise<void> {
 
     const data = {
@@ -331,24 +332,28 @@ export default function useSalesActions() {
       sale.payment === undefined || sale.fk_payment_type === undefined
       || sale.change === undefined || sale.fk_client === undefined
     ){
+      setIsProgressing(false)
       setFlashMessage({
         message: 'Preencha todos os campos!',
         type: 'error',
       });
 
     } else if(sale.payment < sale.tot_to_pay){
+      setIsProgressing(false)
       setFlashMessage({
         message: 'O valor pago não pode ser menor que o total á pagar!',
         type: 'error',
       });
 
     } else if(!permition){
+      setIsProgressing(false)
       setFlashMessage({
         message: 'Não podem ser efetudas 2 vendas no mesmo instante!',
         type: 'error',
       });
 
     }else if(!aproved){
+      setIsProgressing(false)
       setFlashMessage({
         message: 'Contacte a equipe técnica para cadastrar um novo ano!',
         type: 'error',
@@ -374,6 +379,7 @@ export default function useSalesActions() {
             let invoice = {fk_sale: res.data.sale.id, code: code}
             addInvoice(invoice, token)
 
+            setIsProgressing(false)
             setFlashMessage({
               message: 'Venda efetuada com sucesso!',
               type: 'success',

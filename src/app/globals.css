@@ -6,7 +6,7 @@
 }
 
 body{
-  background-color: #cccccc8a !important;
+  background-color: #ddd !important;
 }
 
 .border-full{
@@ -18,7 +18,7 @@ body{
 }
 
 .text-ccc{
-  color: #cccccc8a;
+  color: #ddd;
 }
 
 .bg-ccc{
@@ -33,7 +33,6 @@ body{
 .btn-ccc:hover{
   background-color: #cccccccd !important;
 }
-
 
 .shadow{
   box-shadow: 1px 1px 5px -4px rgba(24, 24, 24, 1);

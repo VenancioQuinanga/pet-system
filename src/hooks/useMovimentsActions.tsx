@@ -20,7 +20,8 @@ export default function useMovimentsActions() {
     moviment: MovimentInterface | any, 
     warehouse: WarehouseInterface | any,
     fk_warehouse: number, 
-    token: any
+    token: any,
+    setIsProgressing: Function
   ): Promise<void> {
     let movimentData = {
       quantity: moviment.quantity,
@@ -30,10 +31,20 @@ export default function useMovimentsActions() {
     
     if (warehouse.quantity <= movimentData.quantity) {
       setFlashMessage({
-         message: 'A quantidade a movimentar não pode ser é superior ou igual a do armazem!', 
+         message: 'A quantidade a movimentar não pode ser superior ou igual a do armazem!', 
          type: 'error'
       })
+
+    } else if (movimentData.quantity <= 0) {
+      setFlashMessage({
+          message: 'A quantidade a movimentar não pode ser inferior ou igual a 0!', 
+          type: 'error'
+      })
+  
     } else {
+
+      setIsProgressing(true)
+      
       try{
         api.post(`/movimento`, movimentData, {
             headers: {
@@ -41,10 +52,12 @@ export default function useMovimentsActions() {
             }
           })
           .then((response) => {
+            setIsProgressing(false)
             setFlashMessage({ message: 'Movimento realizado com sucesso!', type: 'success'})
           })
   
       } catch (error: any) {
+        setIsProgressing(false)
         verifyAuthAndRequestError(error.response?.status, error.response?.data?.msg)
       }
     }

@@ -1,7 +1,6 @@
 'use client'
 
 // Components
-import { useEffect, useState } from "react";
 import InputButton from "./InputButton";
 import Select from "./Select";
 
@@ -9,13 +8,6 @@ import Select from "./Select";
 import { ClientFormInterface } from "@/src/interfaces/Layout/ClientFormInterface";
 
 export default function ClientForm(props: ClientFormInterface) {
-
-  const [genders,setGenders] = useState([])
-  
-  useEffect(()=>{
-    const token = localStorage.getItem('token')
-    props.getGenders(setGenders, token)
-  },[])
   
   return (
     <section className="col-md-12 m-auto mb-4">
@@ -93,7 +85,7 @@ export default function ClientForm(props: ClientFormInterface) {
               name="fk_gender"
               className="mt-2 text-dark bg-ccc form-control p-3"
               defaultOption="Selecione o gênero"
-              options={genders}
+              options={props.genders}
               event={props.onHandleChange}
             />
           </div>

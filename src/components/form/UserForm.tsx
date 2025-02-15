@@ -1,7 +1,6 @@
 'use client'
 
 // Components
-import { useEffect, useState } from "react";
 import Input from "./Input";
 import InputButton from "./InputButton";
 import Select from "./Select";
@@ -10,15 +9,6 @@ import Select from "./Select";
 import { RegisterFormInterface } from "@/src/interfaces/Layout/RegisterFormInterface";
 
 export default function UserForm(props: RegisterFormInterface) {
-
-  const [genders,setGenders] = useState([])
-  const [categories,setCategories] = useState([])
-  
-  useEffect(()=>{
-    const token = localStorage.getItem('token')
-    props.getGenders(setGenders, token) 
-    props.getCategories(setCategories, token) 
-  },[])
   
   return (
     <section className="col-md-12 m-auto mb-4">
@@ -97,7 +87,7 @@ export default function UserForm(props: RegisterFormInterface) {
               className="mt-2 text-dark bg-ccc form-control p-3"
               event={props.onHandleChange}
               defaultOption="Selecione a categória"
-              options={categories}
+              options={props.categories}
             />
           </div>
           <div className="col-md-6 d-inline-block mb-3">
@@ -135,7 +125,7 @@ export default function UserForm(props: RegisterFormInterface) {
               name="fk_gender"
               className="mt-2 text-dark bg-ccc form-control p-3"
               defaultOption="Selecione o gênero"
-              options={genders}
+              options={props.genders}
               event={props.onHandleChange}
             />
           </div>

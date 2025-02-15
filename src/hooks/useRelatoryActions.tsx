@@ -24,7 +24,8 @@ export default function useRelatoryActions() {
     sales: SaleInterface[],
     startDate: Date,
     endDate: Date, 
-    token: any
+    token: any,
+    setIsProgressing: Function
   ): Promise<void> {
     let filterdSales = filterSalesByDateInterval(sales, startDate, endDate)
     let relatory = {
@@ -40,10 +41,12 @@ export default function useRelatoryActions() {
         }
       })
       .then((res)=>{
+        setIsProgressing(false)
         setFlashMessage({message: 'Historico gerado com sucesso', type: 'success'})
       })
     
     } catch (error: any) {
+      setIsProgressing(false)
       verifyAuthAndRequestError(error.response?.status, error.response?.data?.msg)
     }
 

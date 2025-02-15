@@ -1,7 +1,6 @@
 'use client'
 
 // Components
-import { useEffect, useState } from "react";
 import Input from "./Input";
 import InputButton from "./InputButton";
 import Select from "./Select";
@@ -9,18 +8,11 @@ import Select from "./Select";
 type MovimentFormProps = {
   onHandleChange: Function,
   onHandleSubmit: any,
-  getProducts: Function
+  products: any
 }
 
 export default function MovimentForm(props: MovimentFormProps) {
-  const [products,setProducts] = useState<any>({})
-  let prods = [{name: 'Prod1'},{name:'Prod2'}]
-  
-  useEffect(()=>{
-    let token = localStorage.getItem('token')
-    props.getProducts(setProducts,token)
-  },[])
-  
+
   return (
     <>
       <section className="col-md-12 m-auto mb-4">
@@ -38,7 +30,7 @@ export default function MovimentForm(props: MovimentFormProps) {
                 name="fk_product"
                 className="mt-2 text-dark bg-ccc form-control p-3"      
                 defaultOption="Produto a movimentar"        
-                options={products || prods}
+                options={props.products}
                 event={props.onHandleChange}
               />
             </div>
@@ -62,8 +54,8 @@ export default function MovimentForm(props: MovimentFormProps) {
             </div>
           </div>
         </form>
-    </section>
-  </>
+      </section>
+    </>
   );
 }
 

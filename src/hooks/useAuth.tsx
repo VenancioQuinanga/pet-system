@@ -35,9 +35,23 @@ export default function useAuth() {
     }
   }
 
+  async function checkUserByToken(setItem: Function, token: string): Promise<void> {
+    try {
+      const response = await api.get(`/usuario/getuserbytoken/${token}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      setItem(response.data)
+    } catch (error: any) {
+      verifyAuthAndRequestError(error.response?.status, `Erro ao carregar dados!`)
+    }
+  }
+
   async function authUser(data: any) {
     localStorage.setItem('token', `${data.token}`)
-    router.replace('/')
+    localStorage.setItem('is_admin', `${data.is_admin}`)
+
+    if(data.is_admin) return router.replace('/dashboard')
+    router.replace('/vendas')
   }
 
   async function logout(): Promise<void> {
@@ -45,6 +59,7 @@ export default function useAuth() {
     const msgType = 'success'
 
     localStorage.removeItem('token')
+    localStorage.removeItem('is_admin')
     api.defaults.headers.common['Authorization'] = undefined
     router.replace('/auth/login')
 
@@ -89,5 +104,11 @@ export default function useAuth() {
     }
   }
 
-  return { login, logout, getLoginHistories, verifyAuthAndRequestError }
+  return { 
+    login, 
+    checkUserByToken,
+    logout, 
+    getLoginHistories, 
+    verifyAuthAndRequestError 
+  }
 }

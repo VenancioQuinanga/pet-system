@@ -18,7 +18,8 @@ export default function useProductActions() {
 
   async function addProduct(
     product: ProductInterface | any, 
-    token:any
+    token: any,
+    setIsProgressing: Function
   ): Promise<void> {
     try {
       api.post(`/produtos`, product, {
@@ -26,10 +27,16 @@ export default function useProductActions() {
             'Authorization' : `Bearer ${token}`
           }
         })
-
-      setFlashMessage({ message: 'Cadastro realizado com sucesso!', type: 'success'})
+        .then((res)=>{
+          setIsProgressing(false)
+          setFlashMessage({ 
+            message: 'Cadastro realizado com sucesso!', 
+            type: 'success'
+          })
+        })
 
     } catch (error: any) {
+      setIsProgressing(false)
       verifyAuthAndRequestError(error.response?.status, error.response?.data?.msg)
     }
   }
@@ -124,7 +131,8 @@ export default function useProductActions() {
   async function editProduct(
     product: ProductInterface, 
     id: number, 
-    token: any
+    token: any,
+    setIsProgressing: Function
   ): Promise<void> {
     try{
       api.patch(`/produtos/${id}`, product, {
@@ -133,6 +141,7 @@ export default function useProductActions() {
         }
       })
       .then((res)=>{
+        setIsProgressing(false)
         setFlashMessage({ 
           message: 'Produto atualizado com sucesso!', 
           type: 'success'
@@ -140,6 +149,7 @@ export default function useProductActions() {
       })
 
     }catch(error: any){
+      setIsProgressing(false)
       verifyAuthAndRequestError(error.response?.status, error.response?.data?.msg)
     } 
   }

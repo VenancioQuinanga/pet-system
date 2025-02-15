@@ -1,7 +1,6 @@
 'use client'
 
 // Components
-import { useEffect, useState } from "react";
 import Input from "./Input";
 import InputButton from "./InputButton";
 import Select from "./Select";
@@ -10,17 +9,6 @@ import Select from "./Select";
 import { ProductFormInterface } from "@/src/interfaces/Layout/ProductFormInterface";
 
 export default function ProductForm(props: ProductFormInterface) {
-
-  const [families,setFamilies] = useState([])
-  const [types,setTypes] = useState([])
-  const [provisioners,setProvisioners] = useState([])
-
-  useEffect(()=>{
-    const token = localStorage.getItem('token')
-    props.getFamilies(setFamilies, token)
-    props.getTypes(setTypes, token)
-    props.getProvisioners(setProvisioners, token)
-  },[])
 
   return (
     <section className="col-md-12 m-auto mb-4">
@@ -79,7 +67,7 @@ export default function ProductForm(props: ProductFormInterface) {
               className="mt-2 text-dark bg-ccc form-control p-3"
               event={props.onHandleChange}
               defaultOption="Selecione o fornecedor"
-              options={provisioners}
+              options={props.provisioners}
             />
           </div>
           <div className="col-md-6 d-inline-block mb-3">
@@ -89,7 +77,7 @@ export default function ProductForm(props: ProductFormInterface) {
               className="mt-2 text-dark bg-ccc form-control p-3"
               event={props.onHandleChange}
               defaultOption="Selecione o tipo"
-              options={types}
+              options={props.types}
             />
           </div>
           <div className="col-md-6 d-inline-block mb-3">
@@ -99,7 +87,7 @@ export default function ProductForm(props: ProductFormInterface) {
               className="mt-2 text-dark bg-ccc form-control p-3"
               event={props.onHandleChange}
               defaultOption="Selecione a família"
-              options={families}
+              options={props.families}
             />
           </div>
           <div className="col-md-6 d-inline-block mb-3">

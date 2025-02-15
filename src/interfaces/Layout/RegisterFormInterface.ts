@@ -1,7 +1,7 @@
 export interface RegisterFormInterface {
   onHandleSubmit: any,
   onHandleChange: Function,
-  getCategories: Function,
-  getGenders: Function,
+  categories: any,
+  genders: any,
 
 }

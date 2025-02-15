@@ -1,24 +1,16 @@
 'use client'
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
 // Components
-import {DataGrid} from '@mui/x-data-grid';
-import Loader from '../Loader';
+import { DataGrid } from '@mui/x-data-grid';
+import Loader from '../loader/Loader';
 
 type ClientTableProps = {
-  getClients: Function
+  clients: any
 }
 
-export default function ClientTable({getClients}: ClientTableProps) {
-
-  const [clients,setClients] = useState([])
-
-  useEffect(()=>{
-    const token = localStorage.getItem('token')
-    getClients(setClients, token)
-  },[])
+export default function ClientTable({clients}: ClientTableProps) {
 
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
@@ -41,7 +33,7 @@ export default function ClientTable({getClients}: ClientTableProps) {
       <div className="lead text-primary mt-2 mb-4 center">
         <span className="display-6 font-weight-bold">Tabela de clientes</span>
       </div>
-      {clients.length > 0 ? (
+      {clients?.length > 0 ? (
         <div className="custom_table">
           <DataGrid
             rows={clients}

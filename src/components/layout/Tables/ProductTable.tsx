@@ -1,23 +1,16 @@
 'use client'
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-//Components
-import {DataGrid} from '@mui/x-data-grid';
-import Loader from '../Loader';
+// Components
+import { DataGrid } from '@mui/x-data-grid';
+import Loader from '../loader/Loader';
 
 type ProductProps = {
-  getProducts: Function
+  products: any
 }
 
-export default function ProductTable({getProducts}: ProductProps) {
-  const [products, setProducts] = useState([])
-
-  useEffect(()=>{
-    const token = localStorage.getItem('token')
-    getProducts(setProducts, token)
-  },[])
+export default function ProductTable({ products }: ProductProps) {
 
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
@@ -34,8 +27,7 @@ export default function ProductTable({getProducts}: ProductProps) {
         return (
           <div
             style={{
-              backgroundColor: value <= 10 ? 'red' : 'transparent',
-              color: value <= 10 ? 'white' : 'black',
+              color: value <= 10 ? 'red' : 'black',
               width: '100%',
               height: '100%',
               display: 'flex',
@@ -69,7 +61,7 @@ export default function ProductTable({getProducts}: ProductProps) {
       <div className="lead text-primary mt-2 mb-4 center">
         <span className="display-6 font-weight-bold">Tabela de produtos</span>
       </div>
-      {products.length > 0 ? (
+      {products?.length > 0 ? (
         <div className="custom_table">
           <DataGrid
             rows={products}

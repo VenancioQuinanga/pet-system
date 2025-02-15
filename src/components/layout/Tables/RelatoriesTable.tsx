@@ -1,24 +1,17 @@
 'use client'
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 //Components
-import {DataGrid} from '@mui/x-data-grid';
-import Loader from '../Loader';
+import { DataGrid } from '@mui/x-data-grid';
+import Loader from '../loader/Loader';
 
 type RelatoriesProps = {
-  getRelatories: Function
+  relatories: any
 }
 
-export default function RelatoriesTable({getRelatories}: RelatoriesProps) {
-  const [relatories,setRelatories] = useState([])
-
-  useEffect(()=>{
-    const token = localStorage.getItem('token')
-    getRelatories(setRelatories, token)
-  },[])
-
+export default function RelatoriesTable({ relatories }: RelatoriesProps) {
+  
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
     {field: 'start_date', headerName: 'Inicio', width: 200},
@@ -38,7 +31,7 @@ export default function RelatoriesTable({getRelatories}: RelatoriesProps) {
       <div className="lead text-primary mt-2 mb-4 center">
         <span className="display-6 font-weight-bold">Tabela de historicos</span>
       </div>
-      {relatories.length > 0 ? (
+      {relatories?.length > 0 ? (
         <div className="custom_table">
           <DataGrid
             rows={relatories}

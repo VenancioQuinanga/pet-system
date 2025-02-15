@@ -3,9 +3,6 @@
 import React from 'react';
 import { Chart } from 'react-google-charts';
 
-// Components
-import Loader from '../layout/Loader';
-
 type SalesAndLosesType = {
   totSales: number,
   totLoses: number
@@ -26,16 +23,14 @@ const SalesAndLoses: any = ({totSales, totLoses}:SalesAndLosesType) => {
 
   return (
     <>
-      {data?.length > 1 ? (
+      {data?.length > 1 && (
         <Chart
           chartType="PieChart"
-          width="100%"
+          width="auto"
           height="400px"
           data={data}
           options={options}
         />
-      ):(
-        <Loader/>
       )}
       {data?.length === 1 &&(
         <div className="text-dark lead center mb-3">Sem registros encontrados!</div>

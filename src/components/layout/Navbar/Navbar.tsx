@@ -2,12 +2,10 @@
 
 import Image from 'next/image'
 import Styles from './Navbar.module.css'
-import  Link  from 'next/link'
-import SideBar from './SideBar'
+import SideBar from '../sibebar/SideBar'
 
 //Images
 import menu from '../../../assets/img/icons/menu-hamburguer.png'
-import avatar from '../../../assets/img/usuarios/user.jpg'
  
 function Navbar() {
   
@@ -47,11 +45,11 @@ function Navbar() {
           </li>
           <li>
             <Image
-              src={avatar} 
-              alt='Avatar' 
-              className='border-full mb-1' 
-              width="50"
-              height="50" 
+              src='/myavatar.png'
+              alt='avatar' 
+              className='border-full mt-1 p-1 bg-dark' 
+              width={40}
+              height={40} 
               id="icon"
             />  
           </li>

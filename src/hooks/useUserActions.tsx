@@ -16,7 +16,11 @@ export default function useUserActions() {
   const {verifyAuthAndRequestError} = useAuth()
   const { setFlashMessage } = useFlashMessage();
 
-  async function addUser(user: UserInterface | any, token: any): Promise<void> {
+  async function addUser(
+    user: UserInterface | any, 
+    token: any,
+    setIsProgressing: Function
+  ): Promise<void> {
     try {
       api
         .post(`/usuario`, user, {
@@ -25,6 +29,7 @@ export default function useUserActions() {
             }
           })
           .then((response) => {
+            setIsProgressing(false)
             setFlashMessage({ 
               message: 'Cadastro realizado com sucesso!', 
               type: 'success'
@@ -32,6 +37,7 @@ export default function useUserActions() {
           })
 
     } catch (error: any) {
+      setIsProgressing(false)
       verifyAuthAndRequestError(error.response?.status, error.response?.data?.msg)
     }
   }
@@ -70,7 +76,12 @@ export default function useUserActions() {
     } 
   }
 
-  async function editUser(user: UserInterface, id: number, token: any): Promise<void> {
+  async function editUser(
+    user: UserInterface,
+    id: number,
+    token: any,
+    setIsProgressing: Function
+  ): Promise<void> {
     try{
       api.patch(`/usuario/${id}`, user, {
         headers: {
@@ -78,10 +89,15 @@ export default function useUserActions() {
         }
       })
       .then((res)=>{
-        setFlashMessage({ message: 'Usuário atualizado com sucesso!', type: 'success'})
+        setIsProgressing(false)
+        setFlashMessage({ 
+          message: 'Usuário atualizado com sucesso!', 
+          type: 'success'
+        })
       })
       
     }catch(error: any){
+      setIsProgressing(false)
       verifyAuthAndRequestError(error.response?.status, error.response?.data?.msg)
     } 
   }
@@ -121,14 +137,17 @@ export default function useUserActions() {
   
   async function getCategories(setCategories: Function, token: any): Promise<void> {
     try{
-      api.get('/categoria_usuario', {
-        headers: {
-          'Authorization' : `Bearer ${token}`
+      const data = [
+        {
+          id: 1,
+          category: 'Administrador'
+        },
+        {
+          id: 2,
+          category: 'Funcionário'
         }
-      })
-      .then((res)=>{
-        setCategories(res.data)
-      })
+      ]
+      setCategories(data)
         
     }catch(error: any){
       verifyAuthAndRequestError(error.response?.status,

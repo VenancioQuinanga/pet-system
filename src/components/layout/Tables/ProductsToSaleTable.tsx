@@ -32,18 +32,18 @@ export default function ProductsToSaleTable({sale, products, setProducts, remove
         </thead>
         <tbody className={styles.font_frank}>
           {
-            products.map((product:any) => (
+            products?.map((product:any) => (
               <tr key={product.id}>
-                <td className={`text-dark`}>{product.name}</td>
-                <td className={`text-dark`}>{product.description}</td>
-                <td className={`text-dark`}>{`${product.price},00 $`}</td>
-                <td className={`text-dark`}>{product.quantity}</td>
+                <td className={`text-dark`}>{product?.name}</td>
+                <td className={`text-dark`}>{product?.description}</td>
+                <td className={`text-dark`}>{`${product?.price},00 $`}</td>
+                <td className={`text-dark`}>{product?.quantity}</td>
                 <td>
                   <InputButton
                     name='remove_button'
                     className='btn btn-danger'
                     value={<i className="bi bi-trash"></i>}
-                    event={()=> removeItem(setProducts, sale, product.id)}
+                    event={()=> removeItem(setProducts, sale, product?.id)}
                   />
                 </td> 
               </tr>

@@ -1,22 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react';
-
 // Components
-import {DataGrid} from '@mui/x-data-grid';
-import Loader from '../Loader';
+import { DataGrid } from '@mui/x-data-grid';
+import Loader from '../loader/Loader';
 
 type LoginHistoriesTableProps = {
-  getLoginHistories: Function
+  loginHistories: any
 }
 
-export default function LoginHistoriesTable({getLoginHistories}: LoginHistoriesTableProps) {
-  const [loginHistories,setLoginHistories] = useState([])
-
-  useEffect(()=>{
-    const token = localStorage.getItem('token')
-    getLoginHistories(setLoginHistories, token)
-  },[])
+export default function LoginHistoriesTable({loginHistories}: LoginHistoriesTableProps) {
 
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
@@ -33,7 +25,7 @@ export default function LoginHistoriesTable({getLoginHistories}: LoginHistoriesT
       <div className="lead text-primary mt-2 mb-4 center">
         <span className="display-6 font-weight-bold">Tabela de Logins</span>
       </div>
-      {loginHistories.length > 0 ? (
+      {loginHistories?.length > 0 ? (
         <div className="custom_table">
           <DataGrid
             rows={loginHistories}
