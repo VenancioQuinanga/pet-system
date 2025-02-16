@@ -12,6 +12,7 @@ type RelatoriesProps = {
 
 export default function RelatoriesTable({ relatories }: RelatoriesProps) {
   
+  const limit = process.env.NEXT_PUBLIC_TABLE_LIMIT as any
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
     {field: 'start_date', headerName: 'Inicio', width: 200},
@@ -39,11 +40,11 @@ export default function RelatoriesTable({ relatories }: RelatoriesProps) {
             initialState={
               {
                 pagination: {
-                  paginationModel: {page: 0, pageSize: 5}
+                  paginationModel: {page: 0, pageSize: limit as number}
                 }
               }
             }
-            pageSizeOptions={[5,10]}
+            pageSizeOptions={[5, 10]}
             checkboxSelection
           />
         </div>

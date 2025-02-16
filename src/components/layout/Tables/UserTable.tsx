@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 // Components
-import {DataGrid} from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import Loader from '../loader/Loader';
 
 type UserTableProps = {
@@ -13,6 +13,7 @@ type UserTableProps = {
 
 export default function UserTable({users}: UserTableProps) {
 
+  const limit = process.env.NEXT_PUBLIC_TABLE_LIMIT as any
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
     {field: 'name', headerName: 'Nome', width: 200},
@@ -41,12 +42,12 @@ export default function UserTable({users}: UserTableProps) {
             columns={columns}
             initialState={
               {
-                pagination:{
-                  paginationModel:{page:0,pageSize:5}
+                pagination: {
+                  paginationModel: {page: 0, pageSize: limit as number}
                 }
               }
             }
-            pageSizeOptions={[5,10]}
+            pageSizeOptions={[5, 10]}
             checkboxSelection
           />
         </div>

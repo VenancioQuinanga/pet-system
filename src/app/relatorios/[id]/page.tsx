@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, ChangeEvent } from 'react';
 // Components
 import Styles from '@/src/components/layout/Invoice.module.css'
 import Loader from '@/src/components/layout/loader/Loader';
+import customDate from '@/src/components/validators/customDate';
 
 // Hooks
 import useAuth from '@/src/hooks/useAuth';
@@ -13,12 +14,6 @@ import useRelatoryActions from '@/src/hooks/useRelatoryActions';
 // Utils
 import Authentication from '@/src/utils/auth/Authentication';
 import AdminProtected from "@/src/utils/auth/Admin";
-
-function customDate(value: string){
-  const date = new Date(value)
-
-  return date.toLocaleDateString() + ' ' + date.toLocaleTimeString()
-}
 
 export default function ProductsInvoicePage({params}: {params: {id: any}}) {  
   const [isLoading, setIsLoading] = useState(true)
@@ -29,7 +24,6 @@ export default function ProductsInvoicePage({params}: {params: {id: any}}) {
   const [relatoryData, setRelatoryData] = useState<any>([])
   const [relatory, setRelatory] = useState<any>({})
   const [size, setSize] = useState<string>('A4')
-  let dateCustom: any
 
   useEffect(()=>{
     const fetchData = async()=>{
@@ -40,7 +34,6 @@ export default function ProductsInvoicePage({params}: {params: {id: any}}) {
       await setSize(JSON.parse(sizeData))
       await getRelatory(setRelatory, params.id, token)
       await getRelatoryData(setRelatoryData, params.id, token)
-      dateCustom = new Date(relatory.date).toLocaleDateString()
       setIsLoading(false)
     }
 
@@ -113,16 +106,15 @@ export default function ProductsInvoicePage({params}: {params: {id: any}}) {
               <div className="row">
                 <div className={Styles.invoice_container}>
                   {relatoryData && (
-                    <div ref={printRef} 
-                      className={`${Styles.invoice}`}>
-                      <h1 className={Styles.invoice_title}>Petshop Azura, LDA</h1>
+                    <div ref={printRef} className={`${Styles.invoice}`}>
+                      <h1 className={Styles.invoice_title}>{process.env.NEXT_PUBLIC_ENTERPRISE_NAME}</h1>
                       <div className="center">
-                        <p>Contacto: 934567456/953456574 petshopazura@gmail.com</p>
-                        <p>Avenida Pedro de Castro Van-Dúnem Loy</p>
-                        <p>Contribuente: 93006745040574</p>
+                        <p>Contacto: {process.env.NEXT_PUBLIC_ENTERPRISE_CONTACT}</p>
+                        <p>{process.env.NEXT_PUBLIC_ENTERPRISE_ADDRESS}</p>
+                        <p>Contribuente: {process.env.NEXT_PUBLIC_ENTERPRISE_NIF}</p>
                       </div>
                       <hr/>
-                      <p><strong>Data:</strong> {dateCustom}</p>
+                      <p><strong>Data:</strong> {customDate(relatory?.date)}</p>
                       <p><strong>Relatório:</strong> {relatory?.id}</p>
                       <p><strong>Endereço:</strong> Luanda</p>
                       <hr/>
@@ -140,11 +132,11 @@ export default function ProductsInvoicePage({params}: {params: {id: any}}) {
                           {relatoryData &&
                             (relatoryData?.map((sale: any, index: any) => (
                               <tr key={index}>
-                                <td>{sale.tb_sale.id}</td>
-                                <td>{sale.tb_sale.payment} Kzs</td>
-                                <td>{sale.tb_sale.troco} Kzs</td>
-                                <td>{sale.quantity}</td>
-                                <td>{ customDate(sale.tb_sale.date)}</td>
+                                <td>{sale?.tb_sale?.id}</td>
+                                <td>{sale?.tb_sale?.payment} Kzs</td>
+                                <td>{sale?.tb_sale?.troco} Kzs</td>
+                                <td>{sale?.quantity}</td>
+                                <td>{ customDate(sale?.tb_sale?.date)}</td>
                               </tr>
                             )))
                           }
@@ -157,7 +149,7 @@ export default function ProductsInvoicePage({params}: {params: {id: any}}) {
                         <h3 className={Styles.tot_payment}>Total: {tot} Kzs</h3>
                         <hr/>
                       <div className="center">
-                        <p>Os bens/serviços foram processados pelo sistema em {relatory?.date}</p>
+                        <p>Os bens/serviços foram processados pelo sistema em {customDate(relatory?.date)}</p>
                         <p><strong>Obrigado. volte sempre...</strong></p>
                       </div>
                       <button onClick={handlePrint} className={Styles.print_button}>Imprimir Recibo</button>

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 // Components
-import {DataGrid} from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import Loader from '../loader/Loader';
 
 type Sales_productsProps = {
@@ -12,6 +12,7 @@ type Sales_productsProps = {
 
 export default function SalesProductsTable({ salesProducts }: Sales_productsProps) {
 
+  const limit = process.env.NEXT_PUBLIC_TABLE_LIMIT as any
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
     {field: 'tb_product.name', headerName: 'Nome', width: 200},
@@ -35,12 +36,12 @@ export default function SalesProductsTable({ salesProducts }: Sales_productsProp
             columns={columns}
             initialState={
               {
-                pagination:{
-                  paginationModel:{page:0,pageSize:5}
+                pagination: {
+                  paginationModel: {page: 0, pageSize: limit as number}
                 }
               }
             }
-            pageSizeOptions={[5,10]}
+            pageSizeOptions={[5, 10]}
             checkboxSelection
           />
         </div>

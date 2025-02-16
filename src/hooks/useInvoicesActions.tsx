@@ -78,6 +78,7 @@ export default function useInvoicesActions() {
           'Authorization': `Bearer ${token}`
         }
       });
+      console.log('data:', res)
       setInvoice(res.data);
 
     } catch (error: any) {

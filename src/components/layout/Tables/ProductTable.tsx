@@ -12,6 +12,7 @@ type ProductProps = {
 
 export default function ProductTable({ products }: ProductProps) {
 
+  const limit = process.env.NEXT_PUBLIC_TABLE_LIMIT as any
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
     {field: 'name', headerName: 'Nome', width: 200},
@@ -68,7 +69,7 @@ export default function ProductTable({ products }: ProductProps) {
             columns={columns}
             initialState={{
               pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
+                paginationModel: { page: 0, pageSize: limit as number},
               },
             }}
             pageSizeOptions={[5, 10]}

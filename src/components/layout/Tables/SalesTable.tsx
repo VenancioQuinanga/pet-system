@@ -13,6 +13,7 @@ type SalesProps = {
 
 export default function SalesTable({ sales }: SalesProps) {
 
+  const limit = process.env.NEXT_PUBLIC_TABLE_LIMIT as any
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
     {field: 'payment', headerName: 'Pagamento', width: 100},
@@ -49,8 +50,8 @@ export default function SalesTable({ sales }: SalesProps) {
             columns={columns}
             initialState={
               {
-                pagination:{
-                  paginationModel:{page:0,pageSize:5}
+                pagination: {
+                  paginationModel: {page: 0, pageSize: limit as number}
                 }
               }
             }

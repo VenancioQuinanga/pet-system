@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 // Components
-import {DataGrid} from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import Loader from '../loader/Loader';
 
 type WarehouseProps = {
@@ -12,6 +12,7 @@ type WarehouseProps = {
 
 export default function WarehousesTable({warehouses}: WarehouseProps) {
 
+  const limit = process.env.NEXT_PUBLIC_TABLE_LIMIT as any
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
     {field: 'description', headerName: 'Descrição', width: 300},
@@ -67,7 +68,7 @@ export default function WarehousesTable({warehouses}: WarehouseProps) {
               initialState={
                 {
                   pagination:{
-                    paginationModel: {page: 0, pageSize: 5}
+                    paginationModel: {page: 0, pageSize: limit as number}
                   }
                 }
               }

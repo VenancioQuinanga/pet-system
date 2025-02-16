@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 // Components
 import Styles from '@/src/components/layout/Invoice.module.css'
 import Loader from '@/src/components/layout/loader/Loader';
+import customDate from '@/src/components/validators/customDate';
 
 // Hooks
 import useProductActions from '@/src/hooks/useProductActions';
@@ -19,13 +20,6 @@ export default function ProductsInvoicePage() {
   const [productsData, setProductsData] = useState<any[]>([])
   const [invoice, setInvoice] = useState<any>({})
   const [size, setSize] = useState<string>('A4')
-
-  
-  function customDate(value: string){
-    const date = new Date(value)
-  
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString()
-  }
 
   useEffect(() => {
     const fetchData = async()=>{
@@ -71,25 +65,24 @@ export default function ProductsInvoicePage() {
   };
 
   const tot = productsData.reduce((sum: any, product: any) =>
-     sum += Number(product.price * product['tb_stock.quantity']), 0)
+     sum += Number(product?.price * product?.['tb_stock.quantity']), 0)
 
   return (
     <>
       <Authentication>
         {!isLoading ? (
           <div className={Styles.invoice_container}>
-            {invoice.data && (
-              <div ref={printRef} 
-                className={`${Styles.invoice}`}>
-                <h1 className={Styles.invoice_title}>Petshop Azura, LDA</h1>
+            {invoice?.data && (
+              <div ref={printRef} className={`${Styles.invoice}`}>
+                <h1 className={Styles.invoice_title}>{process.env.NEXT_PUBLIC_ENTERPRISE_NAME}</h1>
                 <div className="center">
-                  <p>Contacto: 934567456/953456574 petshopazura@gmail.com</p>
-                  <p>Avenida Pedro de Castro Van-Dúnem Loy</p>
-                  <p>Contribuente: 93006745040574</p>
+                  <p>Contacto: {process.env.NEXT_PUBLIC_ENTERPRISE_CONTACT}</p>
+                  <p>{process.env.NEXT_PUBLIC_ENTERPRISE_ADDRESS}</p>
+                  <p>Contribuente: {process.env.NEXT_PUBLIC_ENTERPRISE_NIF}</p>
                 </div>
                 <hr/>
-                <p><strong>Data:</strong> {customDate(invoice.data.createdAt)}</p>
-                <p><strong>Fatura Recibo:</strong> {invoice.data.code}</p>
+                <p><strong>Data:</strong> {customDate(invoice?.data?.createdAt)}</p>
+                <p><strong>Fatura Recibo:</strong> {invoice?.data?.code}</p>
                 <p><strong>Endereço:</strong> Luanda</p>
                 <hr/>
                 <table className={`${Styles.invoice_table}`}>
@@ -105,14 +98,14 @@ export default function ProductsInvoicePage() {
                     {productsData &&
                       (productsData?.map((product: any, index: any) => (
                       <tr key={index}>
-                        <td>{product['tb_subProduct.description']}</td>
-                        <td>{product['tb_stock.quantity']}</td>
-                        <td>{product['tb_stock.unity']}</td>
-                        <td>{product['price']} Kzs</td>
+                        <td>{product?.['tb_subProduct.description']}</td>
+                        <td>{product?.['tb_stock.quantity']}</td>
+                        <td>{product?.['tb_stock.unity']}</td>
+                        <td>{product?.['price']} Kzs</td>
                       </tr>
                     )))
                     }
-                    {productsData.length < 1 &&
+                    {productsData?.length < 1 &&
                     <div className="text-dark font-weight-bold center">Sem produtos encontrados!</div>
                     }
                   </tbody>
@@ -120,13 +113,13 @@ export default function ProductsInvoicePage() {
                   <h3 className={Styles.tot_payment}>Total: {tot} Kzs</h3>
                   <hr/>
                 <div className="center">
-                  <p>Os bens/serviços foram colacados a disposição do cliente em {invoice.data.createdAt}</p>
+                  <p>Os bens/serviços foram colacados a disposição do cliente em {customDate(invoice?.data?.createdAt)}</p>
                   <p><strong>Obrigado. volte sempre...</strong></p>
                 </div>
                 <button onClick={handlePrint} className={Styles.print_button}>Imprimir Fatura</button>
               </div>
             )}
-            {!invoice.data && (
+            {!invoice?.data && (
               <div className="text-dark lead center">Erro ao carregar dados da fatura!</div>
             )}
           </div>   

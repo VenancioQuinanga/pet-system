@@ -10,6 +10,7 @@ type LoginHistoriesTableProps = {
 
 export default function LoginHistoriesTable({loginHistories}: LoginHistoriesTableProps) {
 
+  const limit = process.env.NEXT_PUBLIC_TABLE_LIMIT as any
   const columns = [
     {field: 'id', headerName: 'Id', width: 100},
     {field: 'tb_user.name', headerName: 'Nome', width: 200},
@@ -32,12 +33,12 @@ export default function LoginHistoriesTable({loginHistories}: LoginHistoriesTabl
             columns={columns}
             initialState={
               {
-                pagination:{
-                  paginationModel:{page:0,pageSize:5}
+                pagination: {
+                  paginationModel: {page: 0, pageSize: limit as number}
                 }
               }
             }
-            pageSizeOptions={[5,10]}
+            pageSizeOptions={[5, 10]}
             checkboxSelection
           />
         </div>
