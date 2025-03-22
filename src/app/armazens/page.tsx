@@ -43,13 +43,17 @@ export default function Warehouses() {
         {!isLoading ? (
           <AdminProtected is_admin={user?.is_admin}>
             <main className="main mt-3">
-              <Link href='/armazens/add'>
-                <InputButton
-                  name='add_warehouse_button'
-                  className='btn btn-dark p-3'
-                  value='Cadastrar armazem'
-                />
-              </Link>
+              <div className="d-flex">
+                <div className="me-3">
+                  <Link href='/armazens/add'>
+                    <InputButton
+                      name='add_warehouse_button'
+                      className='btn btn-dark p-3'
+                      value='Cadastrar armazem'
+                    />
+                  </Link>
+                </div>
+              </div>
               <WarehousesTable
                 warehouses={warehouses}
               />

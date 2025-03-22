@@ -34,6 +34,7 @@ export default function SideBar() {
             <SideBarLink name='Vendas' link='vendas' icon='bi bi-bag-check' />
             <SideBarLink name='Armazens' link='armazens' icon='bi bi-tag' />
             <SideBarLink name='Relatorios' link='relatorios' icon='bi bi-clipboard-data' />
+            <SideBarLink name='Apoio Inventário' link='inventario' icon='bi bi-tag' />
             <SideBarLink name='Fornecedores' link='fornecedores' icon='bi bi-person' />
             <SideBarLink name='Logout' link='#' icon='bi bi-box-arrow-right' event={logout}/>
           </ul>

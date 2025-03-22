@@ -1,11 +1,17 @@
 'use client'
 
 import { useEffect, useRef, useState, ChangeEvent } from 'react';
+import Image from 'next/image';
 
 // Components
 import Loader from '@/src/components/layout/loader/Loader';
 import Styles from '@/src/components/layout/Invoice.module.css'
+
+// Validators
+import dateOnly from '@/src/components/validators/dateOnly';
 import customDate from '@/src/components/validators/customDate';
+import formatNumber from "@/src/components/layout/grid/validators/number";
+import NumberToWords from '@/src/components/validators/numberToWords';
 
 // Hooks
 import useSalesActions from '@/src/hooks/useSalesActions';
@@ -13,6 +19,7 @@ import useInvoicesActions from '@/src/hooks/useInvoicesActions';
 
 // Utils
 import Authentication from '@/src/utils/auth/Authentication';
+import expirationDate from '@/src/components/validators/expirationDate';
 
 export default function SaleInvoicePage({ params }: { params: { id: any } }) {  
   const [isLoading, setIsLoading] = useState(true)
@@ -68,61 +75,127 @@ export default function SaleInvoicePage({ params }: { params: { id: any } }) {
               </form>
             </div>
             </div>
-            <div className="row">    
-            <div className={`${Styles.invoice_container}`}>
+            <div className="row">
+            <div className={`${Styles.invoice_container} mt-0 `}>
             {sales && (
-              <div ref={printRef} className={`${Styles.invoice}`}>
-                <h1 className={Styles.invoice_title}>{process.env.NEXT_PUBLIC_ENTERPRISE_NAME}</h1>
-                <div className="center">
-                  <p>Contacto: {process.env.NEXT_PUBLIC_ENTERPRISE_CONTACT}</p>
-                  <p>{process.env.NEXT_PUBLIC_ENTERPRISE_ADDRESS}</p>
-                  <p>Contribuente: {process.env.NEXT_PUBLIC_ENTERPRISE_NIF}</p>
+              <div ref={printRef} className={`${Styles.invoice} mt-0`}>
+                <Image
+                  src='/tecangola.jpg'
+                  alt='tecangola'
+                  width={200}
+                  height={150}
+                  className="mb-3"
+                />
+                <h3><strong className={`${Styles.invoice_title} mt-0 mb-0`}>{process.env.NEXT_PUBLIC_ENTERPRISE_NAME}</strong></h3>
+                <div className="d-flex mb-5">
+                  <div className='me-auto'>
+                    <p className='mt-0 mb-0'>{process.env.NEXT_PUBLIC_ENTERPRISE_ADDRESS}</p>
+                    <p className='mt-0 mb-0'><strong>Contribuente:</strong> {process.env.NEXT_PUBLIC_ENTERPRISE_NIF}</p>
+                    <p className='mt-0 mb-0'><strong>Tel:</strong> {process.env.NEXT_PUBLIC_ENTERPRISE_TEL}</p>
+                    <p className='mt-0 mb-0'><strong>Email:</strong> {process.env.NEXT_PUBLIC_ENTERPRISE_EMAIL}</p>
+                    <p className='mt-0 mb-0'><strong>Site:</strong> {process.env.NEXT_PUBLIC_ENTERPRISE_WEBSITE}</p>
+                  </div>
+                  <div className='ms-auto mt-5 pt-4 pe-2'>
+                    <strong>Exmo.(s) Sr.(s)</strong>
+                    <p>{sales?.['tb_sale.tb_client.nif']}</p>
+                  </div>
                 </div>
-                <hr/>
-                <p><strong>Data:</strong> {customDate(sales?.['tb_sale.date'])}</p>
-                <p><strong>Fatura Recibo:</strong> {sales?.code}</p>
-                <p><strong>Cliente:</strong> {sales?.['tb_sale.tb_client.name']}</p>
-                <p><strong>NIF:</strong> {sales?.['tb_sale.tb_client.nif']}</p>
-                <p><strong>Endereço:</strong> Luanda</p>
-                <hr/>
 
-                <table className={`${Styles.invoice_table}`}>
-                  <thead>
+                <strong>Fatura Recibo N.°</strong> {sales?.code}
+                <table className={`${Styles.invoice_table} invoice-border-full`}>
+                  <thead className='pt-5'>
                     <tr>
-                      <th>Descrição</th>
-                      <th>Quantidade</th>
-                      <th>Preço</th>
+                      <th>Data</th>
+                      <th>Vencimento</th>
+                      <th>Contribuente</th>
+                      <th>V/Ref</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{customDate(sales?.['tb_sale.date'])}</td>
+                      <td>{expirationDate(sales?.['tb_sale.date'], process.env.NEXT_PUBLIC_EXPIRATION_DAIES)}</td>
+                      <td>{sales?.['tb_sale.tb_client.nif']}</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <table className={`${Styles.invoice_table} p-5 mt-5 invoice-border-top`}>
+                  <thead className='pt-5'>
+                    <tr>
+                      <th>CÓDIGO</th>
+                      <th>DESCRIÇÃO</th>
+                      <th>P.UNIT.</th>
+                      <th>QTD</th>
+                      <th>DESC.</th>
+                      <th>SUB-TOTAL</th>
                     </tr>
                   </thead>
                   <tbody>
                     {productsData &&
                       (productsData?.map((product: any, index: any) => (
-                      <tr key={index}>
-                        <td>{product?.['tb_product.tb_subProduct.description']}</td>
-                        <td>{product?.quantity}</td>
-                        <td>{product?.['tb_product.price']} Kzs</td>
-                      </tr>
+                      <>
+                        <tr key={product?.['tb_product.id']} className='min-border-bottom'>
+                          <td>{product?.['tb_product.id']}</td>
+                          <td>{product?.['tb_product.tb_subProduct.description']}</td>
+                          <td>{formatNumber(product?.['tb_product.price'])}</td>
+                          <td>{product?.quantity}</td>
+                          <td>0.00</td>
+                          <td>{formatNumber(product?.['tb_product.price'])}</td>
+                        </tr>
+                      </>
                     )))
                     }
                     {productsData.length < 1 &&
-                    <div className="text-dark font-weight-bold center">Sem produtos encontrados!</div>
+                      <div className="text-dark font-weight-bold center">Sem produtos encontrados!</div>
                     }
                   </tbody>
                 </table>
-                <div className={Styles.tot_payment}>
-                  <strong>Total:</strong> {`${sales?.['tb_sale.payment'] - sales?.['tb_sale.troco']}`} Kzs
-                </div>
-                <div className={Styles.tot_payment}>
-                  <strong>Pago:</strong> {sales?.['tb_sale.payment']} Kzs
-                </div>
-                <div className={Styles.tot_payment}>
-                  <strong>Troco:</strong> {sales?.['tb_sale.troco']} Kzs
+                <div className="d-flex gap-5 mt-5">
+                  <div className="me-auto w-50">
+                    <table className={Styles.invoice_table}>
+                      <thead>
+                        <tr>
+                          <th className='invoice-border-bottom'>TAXA</th>
+                          <th>BASE</th>
+                          <th>IVA</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>0%</td>
+                          <td>{sales?.['tb_sale.payment'] ? formatNumber(sales?.['tb_sale.payment']) : 0.00}</td>
+                          <td>0.00</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  <div className="mt-5 pt-5">
+                    <small><strong>Aos cuidados de:</strong> {process.env.NEXT_PUBLIC_ENTERPRISE_NAME} </small>
+                    <small className='d-block'><strong>Doc. impresso por:</strong> {process.env.NEXT_PUBLIC_ENTERPRISE_NAME} </small>
+                  </div>
+                  </div>
+                  <div className="w-50 pe-5">
+                    <h2 className="invoice-border-bottom ms-auto">SUMÁRIO</h2>
+                    <div className={`${Styles.tot_payment} d-flex`}>
+                      <strong>TOTAL ILÍQUIDO:</strong> <span className="ms-auto">{`${sales?.['tb_sale.payment'] ? formatNumber(sales?.['tb_sale.payment']) : 0.00}`}</span>
+                    </div>
+                    <div className={`${Styles.tot_payment} d-flex`}>
+                      <strong className='me-auto'>IMPOSTO/IVA:</strong> <span className="ms-auto">0.00</span>
+                    </div>
+                    <div className={`${Styles.tot_payment} d-flex`}>
+                      <strong className='me-auto'>DESCONTO:</strong> <span className="ms-auto">0.00</span>
+                    </div>
+                    <div className={`${Styles.tot_payment} d-flex`}>
+                      <strong className='me-auto'>TROCO(kzs):</strong> <span className="ms-auto">{sales?.['tb_sale.troco']}</span>
+                    </div>
+                    <div className={`${Styles.tot_payment} d-flex pt-4 invoice-border-top`}>
+                      <strong className='me-auto'>TOTAL:</strong> {`${formatNumber(sales?.['tb_sale.payment'] - sales?.['tb_sale.troco'])}`}
+                    </div>
+                    <small className='d-block'><strong>Extenso:</strong> {NumberToWords(sales?.['tb_sale.payment'] - sales?.['tb_sale.troco'])} KWANZAS</small>
+                  </div>
                 </div>
                 <hr/>
-                <div className="center">
-                  <p>Os bens/serviços foram colacados a disposição do cliente em {customDate(sales?.['tb_sale.date'])}</p>
-                  <p><strong>Obrigado. volte sempre...</strong></p>
-                </div>
                 <button onClick={handlePrint} className={Styles.print_button}>Imprimir Fatura</button>
               </div>
               )}

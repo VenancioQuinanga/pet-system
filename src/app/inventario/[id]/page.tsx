@@ -13,32 +13,46 @@ import formatNumber from "@/src/components/layout/grid/validators/number";
 import NumberToWords from '@/src/components/validators/numberToWords';
 
 // Hooks
-import useProductActions from '@/src/hooks/useProductActions';
+import useInventoryActions from '@/src/hooks/useInventoryActions';
 
 // Utils
 import Authentication from '@/src/utils/auth/Authentication';
 
-export default function ProductsInvoicePage() {  
+export default function InventoryPage({ params }: { params: { id: any } }) {  
   const [isLoading, setIsLoading] = useState(true)
-  const { getProducts } = useProductActions()
+  const { getInventory } = useInventoryActions()
   const printRef = useRef<HTMLDivElement>(null)
   const [productsData, setProductsData] = useState<any[]>([])
-  const [invoice, setInvoice] = useState<any>({})
+  const [data, setData] = useState<any[]>([])
+  const [filterType, setFilterType] = useState<string>('all'); // Estado para o filtro
   const [size, setSize] = useState<string>('A4')
-
+  const date = new Date()
+  
   useEffect(() => {
     const fetchData = async()=>{
       const token = await localStorage.getItem('token')
-      const invoiceData: any = await localStorage.getItem('invoice')
       const sizeData: any = await localStorage.getItem('size')
       await setSize(JSON.parse(sizeData))
-      await setInvoice(JSON.parse(invoiceData))
-      await getProducts(setProductsData, token)
+      await getInventory(setData, params.id, token)
       setIsLoading(false)
     }
 
     fetchData()
   }, [])
+
+  // Aplicar filtro nos produtos
+  useEffect(() => {
+    const products = data?.filter((product: any) => {
+      if (filterType === 'positive') {
+        return product?.['tb_acert_type.type'] === 'Positivo';
+      } else if (filterType === 'negative') {
+        return product?.['tb_acert_type.type'] === 'Negativo';
+      }
+      return product;
+    });
+
+    setProductsData(products);
+  }, [data, filterType]); // Reexecuta quando `data` ou `filterType` mudam
 
   const handlePrint = () => {
     if (printRef.current) {
@@ -69,17 +83,52 @@ export default function ProductsInvoicePage() {
     }
   };
 
-  const tot = productsData.reduce((sum: any, product: any) =>
-     sum += Number(product?.price * product?.['tb_stock.quantity']), 0)
-  
+  const tot = productsData?.reduce((sum: any, product: any) =>
+     sum += Number(product?.quantity * product?.['tb_product.price']), 0)
 
   return (
     <>
       <Authentication>
         {!isLoading ? (
           <div className="container">
+            <div className="row invoice-form">    
+              <div className="col-md-10 mt-3 m-auto">
+                <form className="p-5 profile">
+                  <div className="lead text-dark mb-2 center">
+                    <p>Tipo de inventário</p>
+                  </div>
+                  <label className='me-3'>
+                  <input
+                    type="radio"
+                    value="all"
+                    checked={filterType === 'all'}
+                    onChange={(e) => setFilterType(e.target.value)}
+                  />
+                  Todos
+                </label>
+                <label className='ms-3'>
+                  <input
+                    type="radio"
+                    value="positive"
+                    checked={filterType === 'positive'}
+                    onChange={(e) => setFilterType(e.target.value)}
+                  />
+                  Positivos
+                </label>
+                <label className='ms-3'>
+                  <input
+                    type="radio"
+                    value="negative"
+                    checked={filterType === 'negative'}
+                    onChange={(e) => setFilterType(e.target.value)}
+                  />
+                  Negativos
+                </label>
+                </form>
+              </div>
+            </div>
             <div className={`${Styles.invoice_container} mt-0 `}>
-              {invoice?.data && (
+              {productsData && (
                 <div ref={printRef} className={`${Styles.invoice} mt-0`}>
                   <Image
                     src='/tecangola.jpg'
@@ -97,25 +146,18 @@ export default function ProductsInvoicePage() {
                       <p className='mt-0 mb-0'><strong>Email:</strong> {process.env.NEXT_PUBLIC_ENTERPRISE_EMAIL}</p>
                       <p className='mt-0 mb-0'><strong>Site:</strong> {process.env.NEXT_PUBLIC_ENTERPRISE_WEBSITE}</p>
                     </div>
-                    <div className='ms-auto mt-5 pt-4 pe-2'>
-                      <strong>Exmo.(s) Sr.(s)</strong>
-                      <p></p>
-                    </div>
                   </div>
 
-                  <strong>Fatura Proforma N.°</strong> {invoice?.data?.code}
                   <table className={`${Styles.invoice_table} invoice-border-full`}>
                     <thead className='pt-5'>
                       <tr>
                         <th>Data</th>
-                        <th>Contribuente</th>
                         <th>V/Ref</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{customDate(invoice?.data?.createdAt)}</td>
-                        <td></td>
+                        <td>{customDate(date as any)}</td>
                         <td></td>
                       </tr>
                     </tbody>
@@ -128,8 +170,7 @@ export default function ProductsInvoicePage() {
                         <th>DESCRIÇÃO</th>
                         <th>P.UNIT.</th>
                         <th>QTD</th>
-                        <th>UNID.</th>
-                        <th>SUB-TOTAL</th>
+                        <th>Tipo de acerto</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -137,12 +178,11 @@ export default function ProductsInvoicePage() {
                         (productsData?.map((product: any, index: any) => (
                         <>
                           <tr key={product?.['id']} className='min-border-bottom'>
-                            <td>{product?.['id']}</td>
-                            <td>{product?.['tb_subProduct.description']}</td>
-                            <td>{formatNumber(product?.['price'])}</td>
-                            <td>{product?.['tb_stock.quantity']}</td>
-                            <td>{product?.['tb_stock.unity']}</td>
-                            <td>{formatNumber(product?.['price'])}</td>
+                            <td>{product?.['tb_product.id']}</td>
+                            <td>{product?.['tb_product.tb_subProduct.description']}</td>
+                            <td>{formatNumber(product?.['tb_product.price'])}</td>
+                            <td>{product?.['quantity']}</td>
+                            <td>{product?.['tb_acert_type.type']}</td>
                           </tr>
                         </>
                       )))
@@ -181,12 +221,6 @@ export default function ProductsInvoicePage() {
                         <strong>TOTAL ILÍQUIDO:</strong> <span className="ms-auto">{`${tot ? formatNumber(tot) : 0.00}`}</span>
                       </div>
                       <div className={`${Styles.tot_payment} d-flex`}>
-                        <strong className='me-auto'>IMPOSTO/IVA:</strong> <span className="ms-auto">0.00</span>
-                      </div>
-                      <div className={`${Styles.tot_payment} d-flex`}>
-                        <strong className='me-auto'>DESCONTO:</strong> <span className="ms-auto">0.00</span>
-                      </div>
-                      <div className={`${Styles.tot_payment} d-flex`}>
                         <strong className='me-auto'>RETENÇÃO(%):</strong> <span className="ms-auto">0.00</span>
                       </div>
                       <div className={`${Styles.tot_payment} d-flex pt-4 invoice-border-top`}>
@@ -196,10 +230,10 @@ export default function ProductsInvoicePage() {
                     </div>
                   </div>
                   <hr/>
-                  <button onClick={handlePrint} className={Styles.print_button}>Imprimir Fatura</button>
+                  <button onClick={handlePrint} className={Styles.print_button}>Imprimir Inventário</button>
                 </div>
                 )}
-              {!invoice?.data && (
+              {!productsData && (
                 <div className="text-dark lead center">Erro ao carregar dados da fatura!</div>
               )}
             </div>

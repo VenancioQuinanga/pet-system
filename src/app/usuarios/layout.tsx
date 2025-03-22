@@ -1,6 +1,3 @@
-// Components
-import Navbar from '../../components/layout/Navbar/Navbar';
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -9,8 +6,7 @@ export default function RootLayout({
   
   return (
     <>
-      <Navbar />
-      <main className="mt-5 pt-5 pb-5">
+      <main className="mt-5 pb-5">
         {children}
       </main>
     </>

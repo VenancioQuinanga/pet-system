@@ -1,0 +1,15 @@
+<div className="d-block mb-3">
+    <label className="mt-2 text-dark font-weight-bold">Tipo de acerto</label>
+    <div className="d-flex">
+    <label className="text-dark font-weight-bold" htmlFor="acert">
+        <input type="radio" name="acert" id="acert" value="1" className="me-2"/>
+        Positivo
+    </label>
+    </div>
+    <div className="d-flex">
+    <label className="text-dark font-weight-bold" htmlFor="acert">
+        <input type="radio" name="acert" id="acert" value="2" className="me-2"/>
+        Negativo
+    </label>
+    </div>
+</div>

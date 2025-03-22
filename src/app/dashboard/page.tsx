@@ -14,7 +14,7 @@ import GridCard from "../../components/layout/grid/card/GridCard";
 import Navbar from '@/src/components/layout/Navbar/Navbar';
 
 // Validators
-import formatNumber from "../../components/layout/grid/validators/number";
+import formatNumber from "@/src/components/layout/grid/validators/number";
 
 // Hoosks
 import useAuth from '@/src/hooks/useAuth';
@@ -102,22 +102,27 @@ export default function Dashboard() {
                   icon="bi bi-arrow-down-circle"
                 />
                 <div className='mt-5'>
+                  <h1 className='d-block mb-5 center text-primary'>Filtrar vendas</h1>
                   <DateFilter 
                     onFilter={handleFilter}
                     onHandleChange={onHandleChange}
                   />
                 </div>
-                <div className="mb-3">
-                  <GainsChart
-                    monthGains={totGains}
-                  />
-                </div>
-                <div className="mt-5">
-                  <SalesAndLoses
-                    totSales={sales?.length || 0}
-                    totLoses={totLoses?.loses || 0}
-                  />
-                </div>
+                {totGains.length !== 0 && (
+                  <div className="mb-3">
+                    <GainsChart
+                      monthGains={totGains}
+                    />
+                  </div>
+                )}
+                {sales?.length !== 0 && totLoses?.loses !== 0 &&(
+                  <div className="mt-5">
+                    <SalesAndLoses
+                      totSales={sales?.length || 0}
+                      totLoses={totLoses?.loses || 0}
+                    />
+                  </div>
+                )}
                 <div>
                   <ProductTable
                     products={products}

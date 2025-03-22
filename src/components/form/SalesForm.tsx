@@ -1,7 +1,6 @@
 'use client'
 
 // Components
-import { useEffect, useState } from "react";
 import Input from "./Input";
 import InputButton from "./InputButton";
 import Select from "./Select";

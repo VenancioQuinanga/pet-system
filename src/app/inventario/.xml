@@ -1,0 +1,86 @@
+<SAFT xmlns="urn:OECD:StandardAuditFile-Tax:PT_1.04_01">
+  <!-- 1. Cabeçalho -->
+  <Header>
+    <AuditFileVersion>1.04</AuditFileVersion>
+    <CompanyID>123456789</CompanyID> <!-- NIF da empresa -->
+    <TaxRegistrationNumber>123456789</TaxRegistrationNumber>
+    <CompanyName>Petshop Felicidade</CompanyName>
+    <BusinessName>Petshop Felicidade</BusinessName>
+    <CompanyAddress>
+      <AddressDetail>Rua dos Bichinhos, nº 10</AddressDetail>
+      <City>Lisboa</City>
+      <PostalCode>1000-001</PostalCode>
+      <Country>PT</Country>
+    </CompanyAddress>
+    <StartDate>2025-01-01</StartDate>
+    <EndDate>2025-01-31</EndDate>
+    <CurrencyCode>EUR</CurrencyCode>
+    <TaxEntity>Global</TaxEntity>
+    <ProductCompanyTaxID>123456789</ProductCompanyTaxID>
+    <SoftwareCertificationNumber>1234</SoftwareCertificationNumber>
+    <ProductID>GestãoPetshop_v1.0</ProductID>
+    <ProductVersion>1.0</ProductVersion>
+  </Header>
+
+  <!-- 2. MasterFiles -->
+  <MasterFiles>
+    <!-- Clientes -->
+    <Customer>
+      <CustomerID>001</CustomerID>
+      <AccountID>123</AccountID>
+      <CustomerTaxID>999999999</CustomerTaxID>
+      <CompanyName>João Silva</CompanyName>
+      <BillingAddress>
+        <AddressDetail>Rua das Flores, nº 5</AddressDetail>
+        <City>Porto</City>
+        <PostalCode>4000-001</PostalCode>
+        <Country>PT</Country>
+      </BillingAddress>
+    </Customer>
+
+    <!-- Produtos/Serviços -->
+    <Product>
+      <ProductType>Serviço</ProductType>
+      <ProductCode>001</ProductCode>
+      <ProductDescription>Banho e Tosa</ProductDescription>
+      <ProductNumberCode>BT001</ProductNumberCode>
+    </Product>
+
+    <Product>
+      <ProductType>Produto</ProductType>
+      <ProductCode>002</ProductCode>
+      <ProductDescription>Ração para Cães 10kg</ProductDescription>
+      <ProductNumberCode>RC001</ProductNumberCode>
+    </Product>
+  </MasterFiles>
+
+  <!-- 3. Transações -->
+  <SourceDocuments>
+    <SalesInvoices>
+      <Invoice>
+        <InvoiceNo>FT 2025/001</InvoiceNo>
+        <InvoiceDate>2025-01-05</InvoiceDate>
+        <CustomerID>001</CustomerID>
+        <Line>
+          <LineNumber>1</LineNumber>
+          <ProductCode>001</ProductCode>
+          <Quantity>1</Quantity>
+          <UnitPrice>25.00</UnitPrice>
+          <CreditAmount>25.00</CreditAmount>
+        </Line>
+        <Line>
+          <LineNumber>2</LineNumber>
+          <ProductCode>002</ProductCode>
+          <Quantity>1</Quantity>
+          <UnitPrice>45.00</UnitPrice>
+          <CreditAmount>45.00</CreditAmount>
+        </Line>
+        <DocumentTotals>
+          <TaxPayable>16.80</TaxPayable>
+          <NetTotal>70.00</NetTotal>
+          <GrossTotal>86.80</GrossTotal>
+        </DocumentTotals>
+      </Invoice>
+    </SalesInvoices>
+  </SourceDocuments>
+</SAFT>

@@ -28,18 +28,18 @@ export default function Select({ className, name, defaultOption, options, event,
         onInput={event}
         required={true}
       >
-        {defaultOption &&(
+        {defaultOption !== '' && (
           <option value={0}>{defaultOption}</option>
         )}
-        {options.length > 0 &&
-          options.map((option) => (
-            <option value={option.id} key={option.id} selected={option.id === fk}>
-              {option.value || option.gender || option.category || option.description
-                || option.type || option.family || option.name || null}
+        {options?.length !== 0 &&
+          options?.map((option) => (
+            <option value={option?.id} key={option?.id} selected={option?.id === fk}>
+              {option?.value || option?.gender || option?.category || option?.description
+                || option?.type || option?.family || option?.name || null}
             </option>
           ))
         }
-        {options.length === 0 &&(
+        {options?.length === 0 &&(
           <option value="">Sem opções encontradas!</option>
         )}
       </select>

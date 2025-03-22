@@ -2,7 +2,8 @@
   padding: 20px;
   width: 85%;
   margin: 0 auto;
-  font-family: Arial, sans-serif;
+  font-family: 'Times New Roman', Times, serif;
+  text-align: start;
 }
 
 .invoice {
@@ -13,7 +14,6 @@
 }
 
 .invoice_title {
-  text-align: center;
   font-size: 24px;
   margin-bottom: 20px;
 }
@@ -40,7 +40,7 @@
 }
 
 .tot_payment strong {
-  font-size: 1.3em;
+  font-size: 1em;
 }
 
 .print_button, .cancel_button {
@@ -71,6 +71,11 @@
     display: none !important;
   }
  
+  .invoice_container {
+    top: 0 !important;
+    margin-top: -70px !important;
+  }
+
   .invoice {
     border: none;
     background-color: none;

@@ -35,9 +35,8 @@ import { UserInterface } from '@/src/interfaces/others/UserInterface';
 const relatories: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
-  const { checkUserByToken } = useAuth()
+  const { checkUserByToken, getLoginHistories } = useAuth()
   const { getTotSalesForMonth } = useGlobalsActions()
-  const { getLoginHistories } = useAuth()
   const { getMoviments } = useMovimentsActions()
   const { getProducts } = useProductActions()
   const { getProvisioners } = useProvisionerActions()

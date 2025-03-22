@@ -69,7 +69,7 @@ export default function DoMoviment({params}: {params: {id: any}}) {
           <AdminProtected is_admin={user?.is_admin}>
             <div className="main mt-5">
               <div className="row">
-                <div className="col-md-10 mb-5 m-auto">
+                <div className="col-md-10 mb-2 m-auto">
                   <MovimentForm
                     onHandleChange={onHandleChange}
                     onHandleSubmit={onHandleSubmit} 

@@ -406,12 +406,10 @@ export default function useSalesActions() {
         }
       })
       .then((res)=>{
-          console.log('tipos de pagamento:',res.data)
           setSales(res.data)
       })
 
     }catch(error: any){
-        console.log("Error:",error) 
         verifyAuthAndRequestError(error.response?.status,
           'Erro ao carregar dados, tente novamente!')
     } 
@@ -419,14 +417,14 @@ export default function useSalesActions() {
 
   return { 
     getPaymentTypes,
-    getSale, 
-    getSales, 
-    editSale, 
-    deleteSale, 
+    getSale,
+    getSales,
+    editSale,
+    deleteSale,
     calcPayment,
-    addToCart, 
-    removeToCart, 
-    cancelSale, 
-    doSale 
+    addToCart,
+    removeToCart,
+    cancelSale,
+    doSale
   }
 }

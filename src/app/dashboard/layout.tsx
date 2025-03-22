@@ -6,7 +6,7 @@ export default function RootLayout({
   
   return (
     <>
-      <main className="pt-5 pb-3">
+      <main className="mt-5">
         {children}
       </main>
     </>

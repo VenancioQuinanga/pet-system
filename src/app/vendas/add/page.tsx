@@ -20,7 +20,6 @@ import useEconomicYearActions from "@/src/hooks/useEconomicYearActions";
 import Authentication from "@/src/utils/auth/Authentication";
 
 // Intefaces
-import { UserInterface } from "@/src/interfaces/others/UserInterface";
 import { ProductInterface } from "@/src/interfaces/others/ProductInterface";
 import { SaleInterface } from "@/src/interfaces/others/SaleInterface";
 import { ClientInterface } from "@/src/interfaces/others/ClientInterface";
@@ -49,7 +48,7 @@ export default function MakeSale() {
     cancelSale, 
     doSale
   } = useSalesActions()
-  const [product,setProduct] = useState<ProductInterface>({})
+  const [product, setProduct] = useState<ProductInterface>({})
     
   const handleSubmit = async(e: FormEvent<HTMLFormElement>)=>{
     e.preventDefault()

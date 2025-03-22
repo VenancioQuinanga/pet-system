@@ -95,6 +95,27 @@ body{
   background-color: #cccccc55 !important;
 }
 
+.invoice-border-full {
+  border-top: 2px solid #222;
+  border-bottom: 2px solid #222;
+  width: auto;
+}
+
+.invoice-border-top {
+  border-top: 2px solid #222;
+  width: auto;
+}
+
+.invoice-border-bottom {
+  border-bottom: 2px solid #222;
+  width: auto;
+}
+
+.invoice-min-border-bottom {
+  border-bottom: 1px solid #333;
+  width: auto;
+}
+
 @media (max-width: 900px){
   .main{
     padding: 0px !important;
