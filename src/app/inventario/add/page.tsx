@@ -25,7 +25,6 @@ export default function InventoryAdd() {
   const [isProgressing, setIsProgressing] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
-  const [data, setData] = useState<any>(null)
   const { checkUserByToken } = useAuth()
   const [productsData, setProductsData] = useState<any>({})
   const [products, setProducts] = useState<any>([])

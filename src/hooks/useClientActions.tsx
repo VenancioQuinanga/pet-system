@@ -22,12 +22,7 @@ export default function useClientActions() {
     for (let i = 0; i < 7; i++) {
       result += Math.floor(Math.random() * 10);  // Gera um número de 0 a 9
     }
-    console.log('result1',result)
-    console.log('day',date.getDay())
-    console.log('minutes',date.getMinutes())
-    console.log('mili',date.getMilliseconds())
     result += `${date.getDay()}${date.getMinutes()}${date.getMilliseconds()}`
-    console.log('result',result)
     return result;
   };
 

@@ -24,15 +24,15 @@ export default function SalesTable({ sales }: SalesProps) {
     {field: 'date', headerName: 'Data de venda', width: 200},
     {field: 'edit_button', headerName: 'Detalhes', width: 200, renderCell: (params: any)=>{
       return (
-        <Link href={`/vendas/${params.row.id}`}>
+        <Link href={`/faturacao/${params.row.id}`}>
           <i className='bi bi-eye btn btn-primary'></i>
         </Link>
       )}
     },
-    {field: 'invoice_button', headerName: 'Fatura', width: 200, renderCell: (params: any)=>{
+    {field: 'invoice_button', headerName: 'Imprimir fatura', width: 200, renderCell: (params: any)=>{
       return (
-        <Link href={`/vendas/${params.row.id}/fatura`}>
-          <i className='bi bi-eye btn btn-dark'></i>
+        <Link href={`/faturacao/${params.row.id}/fatura`}>
+          <i className='bi bi-printer btn btn-dark'></i>
         </Link>
       )}
     }

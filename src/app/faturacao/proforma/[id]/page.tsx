@@ -1,39 +1,40 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, ChangeEvent } from 'react';
 import Image from 'next/image';
 
 // Components
-import Styles from '@/src/components/layout/Invoice.module.css'
 import Loader from '@/src/components/layout/loader/Loader';
+import Styles from '@/src/components/layout/Invoice.module.css'
 
 // Validators
 import customDate from '@/src/components/validators/customDate';
+import expirationDate from '@/src/components/validators/expirationDate';
 import formatNumber from "@/src/components/layout/grid/validators/number";
 import NumberToWords from '@/src/components/validators/numberToWords';
 
 // Hooks
-import useProductActions from '@/src/hooks/useProductActions';
+import useProformActions from '@/src/hooks/useProformActions';
+import useInvoicesActions from '@/src/hooks/useInvoicesActions';
 
 // Utils
 import Authentication from '@/src/utils/auth/Authentication';
 
-export default function ProductsInvoicePage() {  
+export default function ProformInvoicePage({ params }: { params: { id: any } }) {  
   const [isLoading, setIsLoading] = useState(true)
-  const { getProducts } = useProductActions()
+  const { getSale } = useProformActions()
+  const {getProformInvoice, printInvoice} = useInvoicesActions()
   const printRef = useRef<HTMLDivElement>(null)
   const [productsData, setProductsData] = useState<any[]>([])
-  const [invoice, setInvoice] = useState<any>({})
-  const [size, setSize] = useState<string>('A4')
+  const [sales, setSales] = useState<any>({})
+  const [size, setSize] = useState<string>('A4');
 
-  useEffect(() => {
+  useEffect(()=>{
     const fetchData = async()=>{
-      const token = await localStorage.getItem('token')
-      const invoiceData: any = await localStorage.getItem('invoice')
-      const sizeData: any = await localStorage.getItem('size')
-      await setSize(JSON.parse(sizeData))
-      await setInvoice(JSON.parse(invoiceData))
-      await getProducts(setProductsData, token)
+      const token = localStorage.getItem('token')
+      
+      await getProformInvoice(setSales, params.id, token)
+      await getSale(setProductsData, params.id, token)
       setIsLoading(false)
     }
 
@@ -41,45 +42,41 @@ export default function ProductsInvoicePage() {
   }, [])
 
   const handlePrint = () => {
-    if (printRef.current) {
-      // Define o tamanho antes da impressão
-      const invoiceElement = printRef.current;
-      if (size === 'A4') {
-        invoiceElement.style.width = '210mm';
-        invoiceElement.style.height = '297mm';
-        invoiceElement.style.textAlign = 'left';
-        invoiceElement.style.marginLeft = '-2em';
-        invoiceElement.style.visibility = 'hidden';
-      } else if (size === 'A6') {
-        invoiceElement.style.width = '105mm';
-        invoiceElement.style.height = '148mm';
-        invoiceElement.style.textAlign = 'left';
-        invoiceElement.style.marginRight = '4em';
-        invoiceElement.style.visibility = 'hidden';
-      }
-      
-      setTimeout(() => {
-        invoiceElement.style.visibility = 'visible';
-        window.print();
-        invoiceElement.style.width = '100%';
-        invoiceElement.style.height = '100%';
-        invoiceElement.style.textAlign = 'auto';
-        invoiceElement.style.marginLeft = 'auto';
-      }, 100);
-    }
+    printInvoice(printRef, size)
   };
 
-  const tot = productsData.reduce((sum: any, product: any) =>
-     sum += Number(product?.price * product?.['tb_stock.quantity']), 0)
-  
+  const handleSizeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSize(e.target.value);
+  };
 
   return (
     <>
       <Authentication>
         {!isLoading ? (
           <div className="container">
-            <div className={`${Styles.invoice_container} mt-0 `}>
-              {invoice?.data && (
+            <div className="row invoice-form">    
+              <div className="col-md-10 mt-3 m-auto">
+                <form className="p-5 profile">
+                  <div className="lead text-dark mb-2 center">
+                    <p>Edite o tamanho da folha</p>
+                  </div>
+                  <div className="d-block mb-3">
+                    <label className="mt-2 text-dark font-weight-bold">Tamanho</label>
+                    <select
+                      name="paperSize"
+                      value={size}
+                      className="mt-2 text-dark bg-ccc form-control p-3"
+                      onChange={handleSizeChange}>
+                      <option value="A4">Folha - A4</option>
+                      <option value="A6">Folha - A6</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+              </div>
+              <div className="row">
+              <div className={`${Styles.invoice_container} mt-0 `}>
+              {sales && (
                 <div ref={printRef} className={`${Styles.invoice} mt-0`}>
                   <Image
                     src='/tecangola.jpg'
@@ -97,26 +94,28 @@ export default function ProductsInvoicePage() {
                       <p className='mt-0 mb-0'><strong>Email:</strong> {process.env.NEXT_PUBLIC_ENTERPRISE_EMAIL}</p>
                       <p className='mt-0 mb-0'><strong>Site:</strong> {process.env.NEXT_PUBLIC_ENTERPRISE_WEBSITE}</p>
                     </div>
-                    <div className='ms-auto mt-5 pt-4 pe-2'>
+                    <div className='ms-auto mt-5 pt-4 pe-5'>
                       <strong>Exmo.(s) Sr.(s)</strong>
-                      <p></p>
+                      <p>{sales?.['tb_proform.tb_client.nif'] !== null ? sales?.['tb_proform.tb_client.nif'] : sales.client_nif || 'Consumidor final'}</p>
                     </div>
                   </div>
 
-                  <strong>Fatura Proforma N.°</strong> {invoice?.data?.code}
+                  <strong>Fatura Proforma N.°</strong> {sales?.code}
                   <table className={`${Styles.invoice_table} invoice-border-full`}>
                     <thead className='pt-5'>
                       <tr>
                         <th>Data</th>
+                        <th>Vencimento</th>
                         <th>Contribuente</th>
-                        <th>V/Ref</th>
+                        <th className='pe-5'>V/Ref</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{customDate(invoice?.data?.createdAt)}</td>
-                        <td></td>
-                        <td></td>
+                        <td>{customDate(sales?.['tb_proform.date'])}</td>
+                        <td>{expirationDate(sales?.['tb_proform.date'], 30)}</td>
+                        <td>{sales?.['tb_proform.tb_client.nif'] !== null ? sales?.['tb_proform.tb_client.nif'] : sales.client_nif || 'Consumidor final'}</td>
+                        <td>{sales?.code}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -128,27 +127,27 @@ export default function ProductsInvoicePage() {
                         <th>DESCRIÇÃO</th>
                         <th>P.UNIT.</th>
                         <th>QTD</th>
-                        <th>UNID.</th>
+                        <th>DESC.</th>
                         <th>SUB-TOTAL</th>
                       </tr>
                     </thead>
                     <tbody>
                       {productsData &&
                         (productsData?.map((product: any, index: any) => (
-                        <>
-                          <tr key={product?.['id']} className='min-border-bottom'>
-                            <td>{product?.['id']}</td>
-                            <td>{product?.['tb_subProduct.description']}</td>
-                            <td>{formatNumber(product?.['price'])}</td>
-                            <td>{product?.['tb_stock.quantity']}</td>
-                            <td>{product?.['tb_stock.unity']}</td>
-                            <td>{formatNumber(product?.['price'])}</td>
+                          <tr key={index} className='min-border-bottom'>
+                            <td>{product?.['tb_product.id']}</td>
+                            <td>{product?.['tb_product.tb_subProduct.description']}</td>
+                            <td>{formatNumber(product?.['tb_product.price'])}</td>
+                            <td>{product?.quantity}</td>
+                            <td>0.00</td>
+                            <td>{formatNumber(product?.['tb_product.price'])}</td>
                           </tr>
-                        </>
-                      )))
+                        )))
                       }
                       {productsData.length < 1 &&
-                        <div className="text-dark font-weight-bold center">Sem produtos encontrados!</div>
+                        <tr className="text-dark font-weight-bold center">
+                          <td>Sem produtos encontrados!</td>
+                        </tr>
                       }
                     </tbody>
                   </table>
@@ -165,7 +164,7 @@ export default function ProductsInvoicePage() {
                         <tbody>
                           <tr>
                             <td>0%</td>
-                            <td>{tot ? formatNumber(tot) : 0.00}</td>
+                            <td>{sales?.['tb_proform.payment'] ? formatNumber(sales?.['tb_proform.payment']) : 0.00}</td>
                             <td>0.00</td>
                           </tr>
                         </tbody>
@@ -178,7 +177,7 @@ export default function ProductsInvoicePage() {
                     <div className="w-50 pe-5">
                       <h2 className="invoice-border-bottom ms-auto">SUMÁRIO</h2>
                       <div className={`${Styles.tot_payment} d-flex`}>
-                        <strong>TOTAL ILÍQUIDO:</strong> <span className="ms-auto">{`${tot ? formatNumber(tot) : 0.00}`}</span>
+                        <strong>TOTAL ILÍQUIDO:</strong> <span className="ms-auto">{`${sales?.['tb_proform.payment'] ? formatNumber(sales?.['tb_proform.payment']) : 0.00}`}</span>
                       </div>
                       <div className={`${Styles.tot_payment} d-flex`}>
                         <strong className='me-auto'>IMPOSTO/IVA:</strong> <span className="ms-auto">0.00</span>
@@ -186,27 +185,25 @@ export default function ProductsInvoicePage() {
                       <div className={`${Styles.tot_payment} d-flex`}>
                         <strong className='me-auto'>DESCONTO:</strong> <span className="ms-auto">0.00</span>
                       </div>
-                      <div className={`${Styles.tot_payment} d-flex`}>
-                        <strong className='me-auto'>RETENÇÃO(%):</strong> <span className="ms-auto">0.00</span>
-                      </div>
                       <div className={`${Styles.tot_payment} d-flex pt-4 invoice-border-top`}>
-                        <strong className='me-auto'>TOTAL:</strong> {`${formatNumber(tot)}`}
+                        <strong className='me-auto'>TOTAL:</strong> {`${formatNumber(sales?.['tb_proform.payment'])}`}
                       </div>
-                      <small className='d-block'><strong>Extenso:</strong> {NumberToWords(tot)} KWANZAS</small>
+                      <small className='d-block'><strong>Extenso:</strong> {NumberToWords(sales?.['tb_proform.payment'])} KWANZAS</small>
                     </div>
                   </div>
                   <hr/>
                   <button onClick={handlePrint} className={Styles.print_button}>Imprimir Fatura</button>
                 </div>
                 )}
-              {!invoice?.data && (
-                <div className="text-dark lead center">Erro ao carregar dados da fatura!</div>
-              )}
+                {!sales && (
+                  <div className="text-dark lead center">Erro ao carregar dados da fatura!</div>
+                )}
+              </div>
             </div>
           </div>
         ) : (
           <Loader />
-        )}       
+        )}
       </Authentication>
     </>
   );

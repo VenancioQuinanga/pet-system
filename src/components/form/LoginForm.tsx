@@ -17,7 +17,7 @@ export default function LoginForm(props: LoginForm) {
       <div className="lead text-primary mb-4 center">
         <span className="display-5 font-weight-bold">Login</span>
       </div>
-      <form onSubmit={props.onHandleSubmit} className="p-5 profile">
+      <form className="p-5 profile">
         <div className="lead text-dark mb-2 center">
           <p>Entrar com o email e senha</p>
         </div>
@@ -49,10 +49,11 @@ export default function LoginForm(props: LoginForm) {
         </div>
         <div className="mt-2">
           <InputButton
-            type="submit"
+            type="button"
             name="login"            
             className="btn btn-primary form-control mt-3 font-weight-bold p-3"
             value="Entrar"
+            event={props.onHandleSubmit}
           />
         </div>
       </form>    

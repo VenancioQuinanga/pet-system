@@ -31,6 +31,7 @@ export default function useAuth() {
       setFlashMessage({ message: 'Login realizado com sucesso!', type: 'success'})
       
     } catch (error: any) {
+      console.log('data auth error:', error)
       verifyAuthAndRequestError(error.response?.status, error.response?.data?.msg)
     }
   }
@@ -50,8 +51,8 @@ export default function useAuth() {
     localStorage.setItem('token', `${data.token}`)
     localStorage.setItem('is_admin', `${data.is_admin}`)
 
-    if(data.is_admin) return router.replace('/dashboard')
-    router.replace('/vendas')
+    if(data.is_admin) return router.replace('/dashboard') 
+    router.replace('/faturacao')
   }
 
   async function logout(): Promise<void> {

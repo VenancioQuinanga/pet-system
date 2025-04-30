@@ -49,7 +49,7 @@ export default function MakeRelatory() {
     }
 
     fetchData()
-  },[])
+  }, [])
 
   return (
     <>

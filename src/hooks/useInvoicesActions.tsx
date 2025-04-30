@@ -38,9 +38,9 @@ export default function useInvoicesActions() {
       });
   
       localStorage.setItem('invoice', JSON.stringify(res.data))
-      localStorage.setItem('size', JSON.stringify(invoice.size))
-      setFlashMessage({ message: 'Fatura cadastrada com sucesso!', type: 'success'})
-      router.replace('/produtos/fatura')
+      localStorage.setItem('size', JSON.stringify(invoice?.size))
+      setFlashMessage({ message: 'Fatura gerada com sucesso!', type: 'success'})
+      router.replace('/faturacao/proforma/fatura')
       
     } catch (error: any) {
       verifyAuthAndRequestError(
@@ -78,7 +78,68 @@ export default function useInvoicesActions() {
           'Authorization': `Bearer ${token}`
         }
       });
-      console.log('data:', res)
+      setInvoice(res.data);
+
+    } catch (error: any) {
+      verifyAuthAndRequestError(
+        error.response?.status,
+        'Erro ao carregar dados, tente novamente!'
+      );
+    }
+  }
+  async function getProformInvoice(
+    setInvoice: Function, 
+    id: number, 
+    token: any
+  ): Promise<void> {
+    try {
+      const res = await api.get(`/fatura/proforma/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      setInvoice(res.data);
+
+    } catch (error: any) {
+      verifyAuthAndRequestError(
+        error.response?.status,
+        'Erro ao carregar dados, tente novamente!'
+      );
+    }
+  }
+
+  async function getCreditInvoice(
+    setInvoice: Function, 
+    id: number, 
+    token: any
+  ): Promise<void> {
+    try {
+      const res = await api.get(`/fatura/credito/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      setInvoice(res.data);
+
+    } catch (error: any) {
+      verifyAuthAndRequestError(
+        error.response?.status,
+        'Erro ao carregar dados, tente novamente!'
+      );
+    }
+  }
+
+  async function getDebitInvoice(
+    setInvoice: Function, 
+    id: number, 
+    token: any
+  ): Promise<void> {
+    try {
+      const res = await api.get(`/fatura/debito/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       setInvoice(res.data);
 
     } catch (error: any) {
@@ -120,6 +181,9 @@ export default function useInvoicesActions() {
     addInvoice,
     addProformInvoice,
     getInvoice, 
+    getProformInvoice,
+    getCreditInvoice,
+    getDebitInvoice,
     getInvoices,
     printInvoice
   }

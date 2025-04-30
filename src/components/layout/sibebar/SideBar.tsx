@@ -31,10 +31,10 @@ export default function SideBar() {
             <SideBarLink name='Clientes' link='clientes' icon='bi bi-tag' />
             <SideBarLink name='Usuarios' link='usuarios' icon='bi bi-people' />
             <SideBarLink name='Produtos' link='produtos' icon='bi bi-tag' />
-            <SideBarLink name='Vendas' link='vendas' icon='bi bi-bag-check' />
+            <SideBarLink name='Faturação' link='faturacao' icon='bi bi-bag-check' />
             <SideBarLink name='Armazens' link='armazens' icon='bi bi-tag' />
             <SideBarLink name='Relatorios' link='relatorios' icon='bi bi-clipboard-data' />
-            <SideBarLink name='Apoio Inventário' link='inventario' icon='bi bi-tag' />
+            <SideBarLink name='Inventário' link='inventario' icon='bi bi-tag' />
             <SideBarLink name='Fornecedores' link='fornecedores' icon='bi bi-person' />
             <SideBarLink name='Logout' link='#' icon='bi bi-box-arrow-right' event={logout}/>
           </ul>

@@ -8,13 +8,13 @@ import Select from "./Select";
 // Interfaces
 import { SalesFormInterface } from "@/src/interfaces/Layout/SalesFormInterface";
 
-export default function SalesForm(props: SalesFormInterface) {
+export default function DebitInvoiceForm(props: SalesFormInterface) {
   
   return (
     <>
       <section className="col-md-12 m-auto mb-4">
         <div className="lead text-primary mb-5 center">
-          <span className="display-5 font-weight-bold">Gerar F.Recibo</span>
+          <span className="display-5 font-weight-bold">Gerar F.Débito</span>
         </div>
         <form className="p-5 profile">
           <div className="lead text-dark mb-2 center">
@@ -33,22 +33,22 @@ export default function SalesForm(props: SalesFormInterface) {
             </div>
             <div className="d-block mb-3">
               <label className="mt-2 text-dark font-weight-bold"> Nome Do Cliente(opcional)</label>
-              <input
+              <Input
                 type="text"
                 name="client_name"
                 className="mt-2 text-dark bg-ccc form-control p-3"
                 placeholder="Nome do cliente"
-                onInput={props.onHandleChange}
+                event={props.onHandleChange}
               />
             </div>
             <div className="d-block mb-2">
               <label className="mt-1 text-dark font-weight-bold">NIF Do Cliente(opcional)</label>
-              <input
+              <Input
                 type="text"
                 name="client_nif"
                 className="mt-2 text-dark bg-ccc form-control p-3"
                 placeholder="NIF do cliente"
-                onInput={props.onHandleChange}
+                event={props.onHandleChange}
               />
             </div>
             <div className="col-md-8 d-inline-block mb-2">

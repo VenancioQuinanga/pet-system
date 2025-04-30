@@ -11,7 +11,7 @@ function Navbar() {
   
   function toogle_navbar(): void {
     const aside: any = document.querySelector(".dropDown")
-    const main: any = document.querySelector("main.main")
+    const main: any = document.querySelector(".main")
 
     if (aside.style.display == "block") {
       aside.style.display = "none"

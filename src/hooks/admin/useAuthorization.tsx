@@ -17,7 +17,7 @@ export default function useAdminAuthorization(is_admin: Boolean) {
       setFlashMessage({ message: `Você não é Administrador`, type: 'error'})
       router.replace('/vendas')
     }
-  }, [is_admin, router])
+  }, [is_admin, router, setFlashMessage])
 
   return isAuthorized
 }

@@ -21,7 +21,7 @@ export default function RelatoriesTable({ relatories }: RelatoriesProps) {
     {field: 'invoice_button', headerName: 'imprimir relatório', width: 200, renderCell: (params: any)=>{
       return (
         <Link href={`/relatorios/${params.row.id}`}>
-          <i className='bi bi-eye btn btn-dark'></i>
+          <i className='bi bi-printer btn btn-dark'></i>
         </Link>
       )}
     }

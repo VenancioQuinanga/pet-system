@@ -19,7 +19,7 @@ import useUserActions from "@/src/hooks/useUserActions";
 // Interfaces
 import { ClientInterface } from "@/src/interfaces/others/ClientInterface";
 
-export default function AddUser() {
+export default function AddClient() {
   const [isProgressing, setIsProgressing] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState<any>(null)

@@ -303,11 +303,11 @@ export default function useSalesActions() {
 
     const data = {
       products: products,
-      fk_payment_type: sale.fk_payment_type,
-      payment: sale.payment,
-      troco: sale.change,
-      fk_client: sale.fk_client,
-      fk_user: user.id
+      fk_payment_type: sale?.fk_payment_type,
+      payment: sale?.payment,
+      troco: sale?.change,
+      fk_client: sale?.fk_client,
+      fk_user: user?.id
     };
     let date: Date = new Date()
     let permition: Boolean = true
@@ -329,8 +329,8 @@ export default function useSalesActions() {
     })
 
     if(
-      sale.payment === undefined || sale.fk_payment_type === undefined
-      || sale.change === undefined || sale.fk_client === undefined
+      sale?.payment === undefined || sale?.fk_payment_type === undefined
+      || sale?.change === undefined
     ){
       setIsProgressing(false)
       setFlashMessage({
@@ -338,7 +338,7 @@ export default function useSalesActions() {
         type: 'error',
       });
 
-    } else if(sale.payment < sale.tot_to_pay){
+    } else if(sale?.payment < sale?.tot_to_pay){
       setIsProgressing(false)
       setFlashMessage({
         message: 'O valor pago não pode ser menor que o total á pagar!',
@@ -375,8 +375,13 @@ export default function useSalesActions() {
             sale.change = 0
 
             let date = new Date()
-            let code = `FR/${date.getFullYear()}/${res.data.sale.id}${date.getTime()}`
-            let invoice = {fk_sale: res.data.sale.id, code: code}
+            let code = `FR/${date.getFullYear()}/${res.data.sale.id}`
+            let invoice = {
+              fk_sale: res.data.sale.id, 
+              code: code,
+              client_name: sale?.client_name, 
+              client_nif: sale?.client_nif
+            }
             addInvoice(invoice, token)
 
             setIsProgressing(false)
@@ -415,7 +420,7 @@ export default function useSalesActions() {
     } 
   }
 
-  return { 
+  return {
     getPaymentTypes,
     getSale,
     getSales,

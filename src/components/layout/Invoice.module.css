@@ -77,9 +77,10 @@
   }
 
   .invoice {
+    margin-top: -80px !important;
     border: none;
     background-color: none;
-    padding: 10px;
+    padding: 35px !important;
     box-shadow: none;
   }
 }

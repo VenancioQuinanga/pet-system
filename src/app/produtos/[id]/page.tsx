@@ -50,7 +50,7 @@ export default function EditProduct({ params }: { params: { id: any }}) {
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>)=>{
-    setProduct({...product,[e.target.name]:e.target.value})
+    setProduct({...product,[e.target.name]: e.target.value})
   }
 
   useEffect(()=>{
@@ -66,7 +66,7 @@ export default function EditProduct({ params }: { params: { id: any }}) {
     }
 
     fetchData()
-  },[])
+  }, [])
     
   return (
     <>

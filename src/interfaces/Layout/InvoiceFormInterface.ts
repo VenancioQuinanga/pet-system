@@ -1,5 +1,5 @@
 export interface InvoiceFormInterface {
   onHandleSubmit: any,
-  onHandleSizeChange: any,
+  onHandleChange: any,
   paperSize: any
 }

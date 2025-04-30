@@ -4,9 +4,9 @@ export interface SalesFormInterface {
   onHandleSubmit: any,
   onCancelSale: Function,
   onAddProduct: Function,
-  onHandleChange: Function,
+  onHandleChange: Function | any,
   onChangeProducts: Function,
-  paymentTypes: any
+  paymentTypes?: any
   getedProducts: any,
   getedClients: any,
   sale: SaleInterface

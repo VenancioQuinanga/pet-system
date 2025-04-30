@@ -38,22 +38,22 @@ export default function Users() {
 
   return (
     <>
-    <Authentication>
-      <Navbar />
-      {!isLoading ? (
-        <AdminProtected is_admin={user?.is_admin}>
-          <main className="main mt-3">
-            <Link href='/usuarios/add'>
-              <InputButton
-                name='add_user_button'
-                className='btn btn-dark p-3'
-                value='Cadastrar usuário'
+      <Authentication>
+        <Navbar />
+        {!isLoading ? (
+          <AdminProtected is_admin={user?.is_admin}>
+            <main className="main mt-3">
+              <Link href='/usuarios/add'>
+                <InputButton
+                  name='add_user_button'
+                  className='btn btn-dark p-3'
+                  value='Cadastrar usuário'
+                />
+              </Link>
+              <UserTable 
+                users={users}
               />
-            </Link>
-            <UserTable 
-              users={users}
-            />
-          </main>
+            </main>
           </AdminProtected>   
         ) : (
           <Loader />

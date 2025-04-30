@@ -28,7 +28,7 @@ export default function Authentication({children}: any) {
         setFlashMessage({ message: 'Você não esta autenticado, Faça login', type: 'error'})
       }
   
-  },[])
+  }, [])
 
   return (
     <>

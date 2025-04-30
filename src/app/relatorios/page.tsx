@@ -32,7 +32,7 @@ import { ProductInterface } from '@/src/interfaces/others/ProductInterface';
 import { ProvisionerInterface } from '@/src/interfaces/others/ProvisionerInterface';
 import { UserInterface } from '@/src/interfaces/others/UserInterface';
 
-const relatories: React.FC = () => {
+export default function Relatories() {
   const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
   const { checkUserByToken, getLoginHistories } = useAuth()
@@ -66,7 +66,7 @@ const relatories: React.FC = () => {
     }
 
     fetchData()
-  },[])
+  }, [])
 
   return (
     <>
@@ -120,5 +120,3 @@ const relatories: React.FC = () => {
     </>
   );
 };
-
-export default relatories;

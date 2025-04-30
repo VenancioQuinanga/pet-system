@@ -19,7 +19,7 @@ export default function Welcome() {
       } else if(token && is_admin) {
         router.push('/dashboard')
       } else {
-        router.push('/vendas')
+        router.push('/faturacao')
       }
     }
 

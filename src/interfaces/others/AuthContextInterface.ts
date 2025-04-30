@@ -1,4 +1,4 @@
-import { UserInterface } from '@/interfaces/others/UserInterface';
+import { UserInterface } from './UserInterface';
 
 export interface AuthContextInterface {
   isAuthenticated?: boolean,

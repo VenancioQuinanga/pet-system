@@ -33,6 +33,10 @@ export default function Inventories() {
 
     fetchData()
   }, [])
+  
+  function handleRedirect(){
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/inventario/saft`
+  }
 
   return (
     <>
@@ -56,9 +60,17 @@ export default function Inventories() {
                     <InputButton
                       name='add_inventory_button'
                       className='btn btn-primary p-3'
-                      value='Recolha do inventáo'
+                      value='Recolha do inventario'
                       />
                   </Link>
+                </div>
+                <div className="ms-3">
+                  <InputButton
+                    name='generate_saft_button'
+                    className='btn btn-danger p-3'
+                    value='Gerar SAF-T'
+                    event={handleRedirect}
+                    />
                 </div>
               </div>
               <div className="d-block">

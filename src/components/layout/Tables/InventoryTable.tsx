@@ -16,10 +16,10 @@ export default function InventoryTable({ data }: InventoryProps) {
   const columns = [
     {field: 'id', headerName: 'Id', width: 200},
     {field: 'date', headerName: 'Data', width: 500},
-    {field: 'invoice_button', headerName: 'Imprimir', width: 300, renderCell: (params: any)=>{
+    {field: 'invoice_button', headerName: 'Imprimir inventário', width: 300, renderCell: (params: any)=>{
       return (
         <Link href={`/inventario/${params.row.id}`}>
-          <i className='bi bi-eye btn btn-dark'></i>
+          <i className='bi bi-printer btn btn-dark'></i>
         </Link>
       )}
     }

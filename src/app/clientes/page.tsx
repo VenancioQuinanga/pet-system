@@ -16,7 +16,7 @@ import Navbar from '@/src/components/layout/Navbar/Navbar';
 // Utils
 import Authentication from '@/src/utils/auth/Authentication';
 
-export default function Users() {
+export default function Clients() {
   const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
   const [clients, setClients] = useState<any>([])
